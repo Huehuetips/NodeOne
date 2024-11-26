@@ -1,0 +1,32 @@
+{
+  "name": "nodeone",
+  "version": "1.0.0",
+  "description": "ApiInitial",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --watch index.js",
+    "chat": "node --watch server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Huehuetips/NodeOne.git"
+  },
+  "keywords": [
+    "repository",
+    "Node",
+    "Etc"
+  ],
+  "author": "Adony MOntejo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Huehuetips/NodeOne/issues"
+  },
+  "homepage": "https://github.com/Huehuetips/NodeOne#readme",
+  "devDependencies": {
+    "standard": "^17.1.2"
+  },
+  "dependencies": {
+    "express": "^4.21.1",
+    "socket.io": "^4.8.1"
+  }
+}
