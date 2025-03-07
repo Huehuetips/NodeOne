@@ -1,0 +1,33 @@
+<h2>Welcome to the <%= title %></h2>
+<table border="1" id="usersTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Password</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Users will be populated here by JavaScript -->
+    </tbody>
+</table>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('/api/users')
+            .then(response => response.json())
+            .then(users => {
+                const usersTableBody = document.getElementById('usersTable').getElementsByTagName('tbody')[0];
+                users.forEach(user => {
+                    const row          = usersTableBody.insertRow(-1);
+                    const cellId       = row.insertCell(0);
+                    const cellUsername = row.insertCell(1);
+                    const cellPassword = row.insertCell(2);
+                    cellId.textContent       = user.id;
+                    cellUsername.textContent = user.username;
+                    cellPassword.textContent = user.password;
+                });
+            })
+            .catch(error => console.error('Error fetching users:', error));
+    });
+</script>
