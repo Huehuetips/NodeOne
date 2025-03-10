@@ -7,6 +7,10 @@
             <th>User</th>
             <th>Email</th>
             <th>Enable</th>
+            <th>Fecha de Creación</th>
+            <th>Fecha de Edición</th>
+            <th>Creado por</th>
+            <th>Editado por</th>
         </tr>
     </thead>
     <tbody>
@@ -16,7 +20,11 @@
                 <td><%= user.nameUser %></td>
                 <td><%= user.userUser %></td>
                 <td><%= user.emailUser %></td>
-                <td><%= user.enable %></td>
+                <td><%= user.enableUser %></td>
+                <td><%= user.createdAtUser %></td>
+                <td><%= user.writedAtUser %></td>
+                <td><%= user.createUserId %></td>
+                <td><%= user.writeUserId %></td>
             </tr>
         <% }) %>
     </tbody>

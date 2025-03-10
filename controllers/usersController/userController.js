@@ -29,12 +29,10 @@ class UserController {
         }
 
         const { name, user, email, password } = req.body;
-        console.log('Received data:', { name, user, email, password });
         const newUser = new User(null, name, user, email, password);
         newUser.save((err, result) => {
             if (err) {
                 console.log('Error saving user:', err);
-                console.log('Received data:', { name, user, email, password });
                 return res.status(500).send(err);
             }
             res.status(201).json(result);
