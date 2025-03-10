@@ -1,0 +1,21 @@
+
+<h1>Actualizar Usuario</h1>
+<form action="/users/<%= user.id %>" method="POST">
+    <input type="hidden" name="_method" value="PUT">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" value="<%= user.nameUser %>" required>
+    <br>
+    <label for="user">User:</label>
+    <input type="text" id="user" name="user" value="<%= user.userUser %>" required>
+    <br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" value="<%= user.emailUser %>" required>
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <label for="enable">Enable:</label>
+    <input type="checkbox" id="enable" name="enable" <%= user.enable ? 'checked' : '' %>>
+    <br>
+    <button type="submit">Actualizar</button>
+</form>

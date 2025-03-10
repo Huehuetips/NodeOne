@@ -1,20 +1,32 @@
+/* Definir colores en el root */
+:root {
+    --primary-color: #4CAF50;
+    --secondary-color: #333;
+    --background-color: #f0f0f0;
+    --header-footer-color: #e7e7e7;
+    --text-color: #333;
+    --link-color: #4CAF50;
+    --link-hover-color: #45a049;
+}
+
 /* Ejemplo de estilos CSS */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: var(--background-color);
     margin: 0;
     padding: 0;
+    color: var(--text-color);
 }
 
 header {
-    background-color: #e7e7e7;
+    background-color: var(--header-footer-color);
     color: white;
     padding: 10px 0;
     text-align: center;
 }
 
 footer {
-    background-color: #adadad;
+    background-color: var(--header-footer-color);
     color: white;
     padding: 10px 0;
     text-align: center;
@@ -24,7 +36,7 @@ footer {
 }
 
 h1, h2 {
-    color: #333;
+    color: var(--text-color);
 }
 
 table {
@@ -44,4 +56,32 @@ th, td {
 
 th {
     background-color: #f2f2f2;
+}
+
+/* Estilos para la navbar */
+nav {
+    background-color: var(--primary-color);
+    padding: 10px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    color: var(--link-hover-color);
 }

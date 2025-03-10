@@ -1,0 +1,23 @@
+<h1><%= title %></h1>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>User</th>
+            <th>Email</th>
+            <th>Enable</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% users.forEach(user => { %>
+            <tr>
+                <td><%= user.id %></td>
+                <td><%= user.nameUser %></td>
+                <td><%= user.userUser %></td>
+                <td><%= user.emailUser %></td>
+                <td><%= user.enable %></td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
