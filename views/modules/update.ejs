@@ -1,0 +1,11 @@
+<h1>Actualizar Módulo</h1>
+<form action="/api/modules/<%= module.id %>" method="POST">
+    <input type="hidden" name="_method" value="PUT">
+    <label for="nameModule">Nombre del Módulo:</label>
+    <input type="text" id="nameModule" name="nameModule" value="<%= module.nameModule %>" required>
+    <br>
+    <label for="descriptionModule">Descripción:</label>
+    <textarea id="descriptionModule" name="descriptionModule" required><%= module.descriptionModule %></textarea>
+    <br>
+    <button type="submit">Actualizar</button>
+</form>

@@ -24,15 +24,13 @@ class UserController {
     static createUser(req, res) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            console.log('Validation errors:', errors.array());
-            return res.status(400).json({ errors: errors.array() });
+            return res.json({ errors: errors.array()});
         }
 
-        const { name, user, email, password } = req.body;
-        const newUser = new User(null, name, user, email, password);
+        const { name, user, email, password, rankId, createUserId, writeUserId } = req.body;
+        const newUser = new User(null, rankId, name, user, email, password, 1, createUserId, writeUserId);
         newUser.save((err, result) => {
             if (err) {
-                console.log('Error saving user:', err);
                 return res.status(500).send(err);
             }
             res.status(201).json(result);
@@ -46,12 +44,12 @@ class UserController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { id, name, user, email, password, enable } = req.body;
-        const updatedUser = new User(id, name, user, email, password, enable);
+        const { id, name, user, email, password, enable, rankId, writeUserId } = req.body;
+        const updatedUser = new User(id, rankId, name, user, email, password, enable, null, writeUserId);
         updatedUser.save((err, result) => {
             if (err) {
                 console.log('Error updating user:', err);
-                console.log('Received data:', { id, name, user, email, password, enable });
+                console.log('Received data:', { id, name, user, email, password, enable, rankId, writeUserId });
                 return res.status(500).send(err);
             }
             res.json(result);

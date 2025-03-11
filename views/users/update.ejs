@@ -1,4 +1,3 @@
-
 <h1>Actualizar Usuario</h1>
 <form action="/users/<%= user.id %>" method="POST">
     <input type="hidden" name="_method" value="PUT">
@@ -6,16 +5,19 @@
     <input type="text" id="name" name="name" value="<%= user.nameUser %>" required>
     <br>
     <label for="user">User:</label>
-    <input type="text" id="user" name="user" value="<%= user.userUser %>" required>
+    <input type="text" id="user" name="user" value="<%= user.user %>" required>
     <br>
     <label for="email">Email:</label>
-    <input type="email" id="email" name="email" value="<%= user.emailUser %>" required>
+    <input type="email" id="email" name="email" value="<%= user.email %>" required>
     <br>
     <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
+    <input type="password" id="password" name="password">
+    <br>
+    <label for="rankId">Rango:</label>
+    <input type="number" id="rankId" name="rankId" value="<%= user.rankId %>" required>
     <br>
     <label for="enable">Enable:</label>
-    <input type="checkbox" id="enable" name="enable" <%= user.enable ? 'checked' : '' %>>
+    <input type="checkbox" id="enable" name="enable" <%= user.enable === 'Sí' ? 'checked' : '' %>>
     <br>
     <button type="submit">Actualizar</button>
 </form>

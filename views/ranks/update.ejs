@@ -1,0 +1,8 @@
+<h1>Actualizar Rango</h1>
+<form action="/api/ranks/<%= rank.id %>" method="POST">
+    <input type="hidden" name="_method" value="PUT">
+    <label for="nameRank">Nombre del Rango:</label>
+    <input type="text" id="nameRank" name="nameRank" value="<%= rank.nameRank %>" required>
+    <br>
+    <button type="submit">Actualizar</button>
+</form>

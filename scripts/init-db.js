@@ -23,6 +23,9 @@ const dropAllTables = [
     `DROP PROCEDURE IF EXISTS updateUser;`,
     `DROP PROCEDURE IF EXISTS deleteUser;`,
     `DROP PROCEDURE IF EXISTS searchUserByName;`,
+    `DROP PROCEDURE IF EXISTS searchUserByUsername;`,
+    `DROP PROCEDURE IF EXISTS getUserByUsername;`,
+    `DROP PROCEDURE IF EXISTS searchUserByEmail;`,
     `DROP PROCEDURE IF EXISTS getAllUsers;`,
     `DROP PROCEDURE IF EXISTS getUsersByPage;`,
     `DROP PROCEDURE IF EXISTS disableUser;`,
@@ -112,6 +115,18 @@ const Users = [
     `CREATE PROCEDURE searchUserByName(IN p_nameUser VARCHAR(100))
     BEGIN
         SELECT * FROM users WHERE nameUser LIKE CONCAT('%', p_nameUser, '%');
+    END`,
+    `CREATE PROCEDURE searchUserByUsername(IN p_userUser VARCHAR(15))
+    BEGIN
+        SELECT * FROM users WHERE userUser LIKE CONCAT('%', p_userUser, '%');
+    END`,
+    `CREATE PROCEDURE getUserByUsername(IN p_userUser VARCHAR(15))
+    BEGIN
+        SELECT * FROM users WHERE userUser = p_userUser;
+    END`,
+    `CREATE PROCEDURE searchUserByEmail(IN p_email VARCHAR(75))
+    BEGIN
+        SELECT * FROM users WHERE emailUser LIKE CONCAT('%', p_email, '%');
     END`,
     `CREATE PROCEDURE getAllUsers()
     BEGIN

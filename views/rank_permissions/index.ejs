@@ -1,0 +1,25 @@
+<h1><%= title %></h1>
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>ID del Rango</th>
+                <th>ID del Permiso</th>
+                <th>Fecha de Creación</th>
+                <th>Fecha de Edición</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% rankPermissions.forEach((rankPermission, index) => { %>
+            <tr>
+                <td><%= index + 1 %></td>
+                <td><%= rankPermission.rankId %></td>
+                <td><%= rankPermission.permissionId %></td>
+                <td><%= rankPermission.createdAtRankPermission %></td>
+                <td><%= rankPermission.writedAtRankPermission %></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>

@@ -21,6 +21,10 @@ class User {
         return this._id;
     }
 
+    get rankId() {
+        return this._rankId;
+    }
+
     get nameUser() {
         return this._nameUser;
     }
@@ -60,6 +64,10 @@ class User {
     // Setters
     set id(value) {
         this._id = value;
+    }
+
+    set rankId(value) {
+        this._rankId = value;
     }
 
     set nameUser(value) {
@@ -148,13 +156,18 @@ class User {
         });
     }
 
-    static searchUserByName(name  = this.name, callback) {
-        db.query('CALL searchUserByName(?)', [name], (err, results) => {
+    static searchUserByName(name, fidelity = false, callback) {
+        const procedure = fidelity ? 'CALL getUserByUsername(?)' : 'CALL searchUserByName(?)';
+        db.query(procedure, [name], (err, results) => {
             if (err) {
                 return callback(err, null);
             }
-            const users = results[0].map(row => new User(row.id, row.rankId, row.nameUser, row.userUser, row.emailUser, row.passwordUser, row.enableUser, row.createUserId, row.writeUserId, row.createdAtUser, row.writedAtUser));
-            callback(null, users);
+            if (results[0].length > 0) {
+                const row = results[0][0];
+                const user = new User(row.id, row.rankId, row.nameUser, row.userUser, row.emailUser, row.passwordUser, row.enableUser, row.createUserId, row.writeUserId, row.createdAtUser, row.writedAtUser);
+                return callback(null, user);
+            }
+            callback(null, null);
         });
     }
 
@@ -174,6 +187,35 @@ class User {
                 return callback(err, null);
             }
             callback(null, results);
+        });
+    }
+
+    static searchUserByUser(user, fidelity = false, callback) {
+        const procedure = fidelity ? 'CALL getUserByUsername(?)' : 'CALL searchUserByUsername(?)';
+        db.query(procedure, [user], (err, results) => {
+            if (err) {
+                return callback(err, null);
+            }
+            if (results[0].length > 0) {
+                const row = results[0][0];
+                const user = new User(row.id, row.rankId, row.nameUser, row.userUser, row.emailUser, row.passwordUser, row.enableUser, row.createUserId, row.writeUserId, row.createdAtUser, row.writedAtUser);
+                return callback(null, user);
+            }
+            callback(null, null);
+        });
+    }
+
+    static searchUserByEmail(email, callback) {
+        db.query('CALL searchUserByEmail(?)', [email], (err, results) => {
+            if (err) {
+                return callback(err, null);
+            }
+            if (results[0].length > 0) {
+                const row = results[0][0];
+                const user = new User(row.id, row.rankId, row.nameUser, row.userUser, row.emailUser, row.passwordUser, row.enableUser, row.createUserId, row.writeUserId, row.createdAtUser, row.writedAtUser);
+                return callback(null, user);
+            }
+            callback(null, null);
         });
     }
 }

@@ -1,0 +1,25 @@
+<h1><%= title %></h1>
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nombre del Módulo</th>
+                <th>Descripción</th>
+                <th>Fecha de Creación</th>
+                <th>Fecha de Edición</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% modules.forEach((module, index) => { %>
+            <tr>
+                <td><%= index + 1 %></td>
+                <td><%= module.nameModule %></td>
+                <td><%= module.descriptionModule %></td>
+                <td><%= module.createdAtModule %></td>
+                <td><%= module.writedAtModule %></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>

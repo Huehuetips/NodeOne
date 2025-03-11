@@ -1,4 +1,5 @@
 const User = require('../../models/userModel');
+const Rank = require('../../models/rankModel');
 
 class userFrontend {    
     static renderUsersPage(req, res) {
@@ -15,6 +16,12 @@ class userFrontend {
                             return reject(err);
                         }
                         user.createUserId = creator;
+                    });
+                    Rank.getRankById(user.rankId, (err, creator) => {
+                        if (err) {
+                            return reject(err);
+                        }
+                        user.rankId = creator;
                     });
                     User.getUserById(user.writeUserId, (err, creator) => {
                         if (err) {
@@ -37,7 +44,14 @@ class userFrontend {
     }
 
     static renderCreateUserPage(req, res) {
-        res.render('users/create', { title: 'Crear Usuario' });
+        const limit = 10; // Limitar a los primeros 10 rangos
+        const offset = 0;
+        Rank.getRanksByPage(limit, offset, (err, ranks) => {
+            if (err) {
+                return res.status(500).send('Error fetching ranks');
+            }
+            res.render('users/create', { title: 'Crear Usuario', ranks });
+        });
     }
 
     static renderUpdateUserPage(req, res) {

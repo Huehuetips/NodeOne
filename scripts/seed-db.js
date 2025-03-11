@@ -78,15 +78,15 @@ const insertRankPermissionData = [
 
 const insertUserData = [
     `CALL createUser('John Doe', 'john_doe', 'john@example.com', 'password123', 2, 1, 1)`,
-    `CALL createUser('Jane Smith', 'jane_smith', 'jane@example.com', 'password123', 2, 4, 2)`,
+    `CALL createUser('Jane Smith', 'jane_smith', 'jane@example.com', 'password123', 2, 1, 1)`,
     `CALL createUser('Alice Johnson', 'alice_johnson', 'alice@example.com', 'password123', 2, 1, 1)`,
-    `CALL createUser('Bob Brown', 'bob_brown', 'bob@example.com', 'password123', 2, 1, 1)`,
-    `CALL createUser('Charlie Davis', 'charlie_davis', 'charlie@example.com', 'password123', 2, 1, 1)`,
-    `CALL createUser('Diana Evans', 'diana_evans', 'diana@example.com', 'password123', 2, 1, 1)`,
-    `CALL createUser('Eve Foster', 'eve_foster', 'eve@example.com', 'password123', 2, 9, 3)`,
-    `CALL createUser('Frank Green', 'frank_green', 'frank@example.com', 'password123', 2, 3, 5)`,
-    `CALL createUser('Grace Harris', 'grace_harris', 'grace@example.com', 'password123', 2, 1, 1)`,
-    `CALL createUser('Hank Irving', 'hank_irving', 'hank@example.com', 'password123', 2, 2, 2)`,
+    `CALL createUser('Bob Brown', 'bob_brown', 'bob@example.com', 'password123', 5, 1, 1)`,
+    `CALL createUser('Charlie Davis', 'charlie_davis', 'charlie@example.com', 'password123', 3, 1, 1)`,
+    `CALL createUser('Diana Evans', 'diana_evans', 'diana@example.com', 'password123', 6, 1, 1)`,
+    `CALL createUser('Eve Foster', 'eve_foster', 'eve@example.com', 'password123', 2, 1, 1)`,
+    `CALL createUser('Frank Green', 'frank_green', 'frank@example.com', 'password123', 2, 1, 1)`,
+    `CALL createUser('Grace Harris', 'grace_harris', 'grace@example.com', 'password123', 2, 2, 2)`,
+    `CALL createUser('Hank Irving', 'hank_irving', 'hank@example.com', 'password123', 5, 2, 2)`,
     `CALL createUser('Otro Nombre', 'otro_nombre', 'nombre@example.com', 'password123', 2, 2, 2)`,
 ];
 

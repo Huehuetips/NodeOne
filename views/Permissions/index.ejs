@@ -1,0 +1,25 @@
+<h1><%= title %></h1>
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nombre del Permiso</th>
+                <th>Módulo</th>
+                <th>Fecha de Creación</th>
+                <th>Fecha de Edición</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% permissions.forEach((permission, index) => { %>
+            <tr>
+                <td><%= index + 1 %></td>
+                <td><%= permission.namePermission %></td>
+                <td><%= permission.moduleId %></td>
+                <td><%= permission.createdAtPermission %></td>
+                <td><%= permission.writedAtPermission %></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>

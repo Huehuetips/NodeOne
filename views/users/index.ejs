@@ -1,13 +1,13 @@
 <h1><%= title %></h1>
 <div>
-
     <table>
         <thead>
             <tr>
-                <th>ID</th>
+                <th>#</th>
                 <th>Name</th>
                 <th>User</th>
                 <th>Email</th>
+                <th>Rango</th>
                 <th>Enable</th>
                 <th>Fecha de Creación</th>
                 <th>Fecha de Edición</th>
@@ -16,12 +16,13 @@
             </tr>
         </thead>
         <tbody>
-            <% users.forEach(user => { %>
+            <% users.forEach((user, index) => { %>
             <tr>
-                <td><%= user.id %></td>
+                <td><%= index + 1 %></td>
                 <td><%= user.nameUser %></td>
                 <td><%= user.user %></td>
                 <td><%= user.email %></td>
+                <td><%= user.rankId.nameRank %></td>
                 <td><%= user.enable %></td>
                 <td><%= user.createdAtUser %></td>
                 <td><%= user.writedAtUser %></td>
