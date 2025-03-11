@@ -1,31 +1,34 @@
 <h1><%= title %></h1>
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>User</th>
-            <th>Email</th>
-            <th>Enable</th>
-            <th>Fecha de Creación</th>
-            <th>Fecha de Edición</th>
-            <th>Creado por</th>
-            <th>Editado por</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% users.forEach(user => { %>
+<div class="container">
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>User</th>
+                <th>Email</th>
+                <th>Enable</th>
+                <th>Fecha de Creación</th>
+                <th>Fecha de Edición</th>
+                <th>Creado por</th>
+                <th>Editado por</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.forEach(user => { %>
             <tr>
                 <td><%= user.id %></td>
                 <td><%= user.nameUser %></td>
-                <td><%= user.userUser %></td>
-                <td><%= user.emailUser %></td>
-                <td><%= user.enableUser %></td>
+                <td><%= user.user %></td>
+                <td><%= user.email %></td>
+                <td><%= user.enable %></td>
                 <td><%= user.createdAtUser %></td>
                 <td><%= user.writedAtUser %></td>
-                <td><%= user.createUserId %></td>
-                <td><%= user.writeUserId %></td>
+                <td><%= user.createUserId.nameUser %></td>
+                <td><%= user.writeUserId.nameUser %></td>
             </tr>
-        <% }) %>
-    </tbody>
-</table>
+            <% }) %>
+        </tbody>
+    </table>
+</div>

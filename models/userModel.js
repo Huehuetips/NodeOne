@@ -42,15 +42,7 @@ class User {
     }
 
     get createUserId() {
-        return new Promise((resolve, reject) => {
-            User.getUserById(this._createUserId, (err, user) => {
-                if (err) {
-                    return reject(err);
-                }
-                console(user.nameUser);
-                return user;
-            });
-        });
+        return this._createUserId;
     }
 
     get writeUserId() {
@@ -117,6 +109,7 @@ class User {
     }
 
     static getUserById(id = this.id, callback) {
+        // console.log(id);
         db.query('CALL readUser(?)', [id], (err, results) => {
             if (err) {
                 return callback(err, null);

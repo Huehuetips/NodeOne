@@ -1,12 +1,38 @@
 const User = require('../../models/userModel');
 
-class userFrontend {
+class userFrontend {    
     static renderUsersPage(req, res) {
         User.getAllUsers((err, users) => {
             if (err) {
-                return res.status(500).send(err);
+                return res.status(500).send('Error fetching users');
             }
-            res.render('users/index', { title: 'Users Page', users: users });
+    
+            // Fetch the creator's name for each user
+            const userPromises = users.map(user => {
+                return new Promise((resolve, reject) => {
+                    User.getUserById(user.createUserId, (err, creator) => {
+                        if (err) {
+                            return reject(err);
+                        }
+                        user.createUserId = creator;
+                    });
+                    User.getUserById(user.writeUserId, (err, creator) => {
+                        if (err) {
+                            return reject(err);
+                        }
+                        user.writeUserId = creator;
+                        resolve(user);
+                    });
+                });
+            });
+
+            Promise.all(userPromises)
+                .then(usersWithCreators => {
+                    res.render('users/index', { title: 'Users', users: usersWithCreators });
+                })
+                .catch(err => {
+                    res.status(500).send('Error fetching user creators');
+                });
         });
     }
 
