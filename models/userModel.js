@@ -9,7 +9,7 @@ class User {
         this._user = user;
         this._email = email;
         this._password = password;
-        this._enable = enable;
+        this._enable = enable ? 'Sí' : 'No';
         this._createUserId = createUserId;
         this._writeUserId = writeUserId;
         this._createdAtUser = moment(createdAtUser).format('DD-MM-YYYY HH:mm:ss');
@@ -79,7 +79,7 @@ class User {
     }
 
     set enable(value) {
-        this._enable = value;
+        this._enable = value ? 'Sí' : 'No';
     }
 
     set createUserId(value) {
