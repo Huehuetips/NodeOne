@@ -161,7 +161,6 @@ async function filterData(input) {
     const searchQuery = input.value.toLowerCase();
     const [module, idInput, suggestionsList, displayField] = input.dataset.filter.split('-');
     const suggestions = document.getElementById(suggestionsList);
-    suggestions.innerHTML = '';
 
     if (searchQuery.length < 2) {
         suggestions.style.display = 'none';
@@ -177,18 +176,31 @@ async function filterData(input) {
     suggestions.style.display = 'block';
     suggestions.style.width = `${input.offsetWidth}px`; // Ajustar el ancho de la lista para que coincida con el input
 
-    data.forEach(item => {
-        if (item[displayField] && item[displayField].toLowerCase().includes(searchQuery)) {
-            const li = document.createElement('li');
-            li.textContent = item[displayField];
-            li.setAttribute('data-id', item._id);
-            li.addEventListener('click', function() {
+    const existingItems = Array.from(suggestions.children);
+    const newItems = data.filter(item => item[displayField] && item[displayField].toLowerCase().includes(searchQuery));
+
+    // Remove items that are no longer in the new data
+    existingItems.forEach(item => {
+        const itemId = item.getAttribute('data-id');
+        if (!newItems.some(newItem => newItem._id === itemId)) {
+            suggestions.removeChild(item);
+        }
+    });
+
+    // Add or update items
+    newItems.forEach(item => {
+        let listItem = existingItems.find(existingItem => existingItem.getAttribute('data-id') === item._id);
+        if (!listItem) {
+            listItem = document.createElement('li');
+            listItem.setAttribute('data-id', item._id);
+            listItem.addEventListener('click', function() {
                 input.value = this.textContent;
                 document.getElementById(idInput).value = this.getAttribute('data-id');
                 suggestions.innerHTML = '';
                 suggestions.style.display = 'none';
             });
-            suggestions.appendChild(li);
+            suggestions.appendChild(listItem);
         }
+        listItem.textContent = item[displayField];
     });
 }

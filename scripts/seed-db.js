@@ -22,6 +22,7 @@ const insertRankData = [
     `CALL createRank('Editor', 1, 1)`, // id = 4
     `CALL createRank('Viewer', 1, 1)`, // id = 5
     `CALL createRank('Guest', 1, 1)`, // id = 6
+    `CALL createRank('Super User', 1, 1)`, // id = 6
 ];
 
 const insertPermissionData = [
