@@ -1,223 +1,59 @@
-const db = require('../config/database');
-const moment = require('moment');
+const { DataTypes, Model } = require('sequelize');
+const sequelize = require('../config/database');
 
-class User {
-    constructor(id, rankId, nameUser, user, email, password, enable = 1, createUserId = 1, writeUserId = 1, createdAtUser, writedAtUser) {
-        this._id = id;
-        this._rankId = rankId;
-        this._nameUser = nameUser;
-        this._user = user;
-        this._email = email;
-        this._password = password;
-        this._enable = enable ? 'Sí' : 'No';
-        this._createUserId = createUserId;
-        this._writeUserId = writeUserId;
-        this._createdAtUser = moment(createdAtUser).format('DD-MM-YYYY HH:mm:ss');
-        this._writedAtUser = moment(writedAtUser).format('DD-MM-YYYY HH:mm:ss');
-    }
+class User extends Model {}
 
-    // Getters
-    get id() {
-        return this._id;
-    }
-
-    get rankId() {
-        return this._rankId;
-    }
-
-    get nameUser() {
-        return this._nameUser;
-    }
-
-    get user() {
-        return this._user;
-    }
-
-    get email() {
-        return this._email;
-    }
-
-    get password() {
-        return this._password;
-    }
-
-    get enable() {
-        return this._enable;
-    }
-
-    get createUserId() {
-        return this._createUserId;
-    }
-
-    get writeUserId() {
-        return this._writeUserId;
-    }
-
-    get createdAtUser() {
-        return this._createdAtUser;
-    }
-
-    get writedAtUser() {
-        return this._writedAtUser;
-    }
-
-    // Setters
-    set id(value) {
-        this._id = value;
-    }
-
-    set rankId(value) {
-        this._rankId = value;
-    }
-
-    set nameUser(value) {
-        this._nameUser = value;
-    }
-
-    set user(value) {
-        this._user = value;
-    }
-
-    set email(value) {
-        this._email = value;
-    }
-
-    set password(value) {
-        this._password = value;
-    }
-
-    set enable(value) {
-        this._enable = value ? 'Sí' : 'No';
-    }
-
-    set createUserId(value) {
-        this._createUserId = value;
-    }
-
-    set writeUserId(value) {
-        this._writeUserId = value;
-    }
-
-    set createdAtUser(value) {
-        this._createdAtUser = moment(value).format('DD-MM-YYYY HH:mm:ss');
-    }
-
-    set writedAtUser(value) {
-        this._writedAtUser = moment(value).format('DD-MM-YYYY HH:mm:ss');
-    }
-
-    static getAllUsers(callback) {
-        db.query('CALL getAllUsers()', (err, results) => {
-            if (err) {
-                return callback(err, null);
-            }
-            const users = results[0].map(row => new User(row.id, row.rankId, row.nameUser, row.userUser, row.emailUser, row.passwordUser, row.enableUser, row.createUserId, row.writeUserId, row.createdAtUser, row.writedAtUser));
-            callback(null, users);
-        });
-    }
-
-    static getUserById(id = this.id, callback) {
-        // console.log(id);
-        db.query('CALL readUser(?)', [id], (err, results) => {
-            if (err) {
-                return callback(err, null);
-            }
-            const row = results[0][0];
-            const user = new User(row.id, row.rankId, row.nameUser, row.userUser, row.emailUser, row.passwordUser, row.enableUser, row.createUserId, row.writeUserId, row.createdAtUser, row.writedAtUser);
-            callback(null, user);
-        });
-    }
-
-    save(callback) {
-        if (this.id) {
-            db.query('CALL updateUser(?, ?, ?, ?, ?, ?)', [this.id, this.nameUser, this.user, this.email, this.rankId, this.writeUserId], (err, results) => {
-                if (err) {
-                    return callback(err, null);
-                }
-                callback(null, results);
-            });
-        } else {
-            db.query('CALL createUser(?, ?, ?, ?, ?, ?, ?)', [this.nameUser, this.user, this.email, this.password, this.rankId, this.createUserId, this.writeUserId], (err, results) => {
-                if (err) {
-                    return callback(err, null);
-                }
-                this.id = results.insertId;
-                callback(null, results);
-            });
-        }
-    }
-
-    static deleteUser(id = this.id, callback) {
-        db.query('CALL deleteUser(?)', [id], (err, results) => {
-            if (err) {
-                return callback(err, null);
-            }
-            callback(null, results);
-        });
-    }
-
-    static searchUserByName(name, fidelity = false, callback) {
-        const procedure = fidelity ? 'CALL getUserByUsername(?)' : 'CALL searchUserByName(?)';
-        db.query(procedure, [name], (err, results) => {
-            if (err) {
-                return callback(err, null);
-            }
-            if (results[0].length > 0) {
-                const row = results[0][0];
-                const user = new User(row.id, row.rankId, row.nameUser, row.userUser, row.emailUser, row.passwordUser, row.enableUser, row.createUserId, row.writeUserId, row.createdAtUser, row.writedAtUser);
-                return callback(null, user);
-            }
-            callback(null, null);
-        });
-    }
-
-    static getUsersByPage(limit, offset, callback) {
-        db.query('CALL getUsersByPage(?, ?)', [limit, offset], (err, results) => {
-            if (err) {
-                return callback(err, null);
-            }
-            const users = results[0].map(row => new User(row.id, row.rankId, row.nameUser, row.userUser, row.emailUser, row.passwordUser, row.enableUser, row.createUserId, row.writeUserId, row.createdAtUser, row.writedAtUser));
-            callback(null, users);
-        });
-    }
-
-    static disableUser(id  = this.id, callback) {
-        db.query('CALL disableUser(?)', [id], (err, results) => {
-            if (err) {
-                return callback(err, null);
-            }
-            callback(null, results);
-        });
-    }
-
-    static searchUserByUser(user, fidelity = false, callback) {
-        const procedure = fidelity ? 'CALL getUserByUsername(?)' : 'CALL searchUserByUsername(?)';
-        db.query(procedure, [user], (err, results) => {
-            if (err) {
-                return callback(err, null);
-            }
-            if (results[0].length > 0) {
-                const row = results[0][0];
-                const user = new User(row.id, row.rankId, row.nameUser, row.userUser, row.emailUser, row.passwordUser, row.enableUser, row.createUserId, row.writeUserId, row.createdAtUser, row.writedAtUser);
-                return callback(null, user);
-            }
-            callback(null, null);
-        });
-    }
-
-    static searchUserByEmail(email, callback) {
-        db.query('CALL searchUserByEmail(?)', [email], (err, results) => {
-            if (err) {
-                return callback(err, null);
-            }
-            if (results[0].length > 0) {
-                const row = results[0][0];
-                const user = new User(row.id, row.rankId, row.nameUser, row.userUser, row.emailUser, row.passwordUser, row.enableUser, row.createUserId, row.writeUserId, row.createdAtUser, row.writedAtUser);
-                return callback(null, user);
-            }
-            callback(null, null);
-        });
-    }
-}
+User.init({
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    rankId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    nameUser: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    userUser: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    emailUser: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    passwordUser: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    enableUser: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+    },
+    createUserId: {
+        type: DataTypes.INTEGER,
+        defaultValue: 1,
+    },
+    writeUserId: {
+        type: DataTypes.INTEGER,
+        defaultValue: 1,
+    },
+    createdAtUser: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+    },
+    writedAtUser: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+    },
+}, {
+    sequelize,
+    modelName: 'User',
+    tableName: 'users',
+    timestamps: false,
+});
 
 module.exports = User;

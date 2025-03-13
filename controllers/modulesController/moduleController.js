@@ -1,86 +1,80 @@
 const { validationResult } = require('express-validator');
-const Module = require('../../models/moduleModel');
+const { Module } = require('../../models');
 
 class ModuleController {
-    static getAllModules(req, res) {
-        Module.getAllModules((err, modules) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+    static async getAllModules(req, res) {
+        try {
+            const modules = await Module.findAll();
             res.json(modules);
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static getModuleById(req, res) {
-        const moduleId = req.params.id;
-        Module.getModuleById(moduleId, (err, module) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+    static async getModuleById(req, res) {
+        try {
+            const module = await Module.findByPk(req.params.id);
             res.json(module);
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static createModule(req, res) {
+    static async createModule(req, res) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { nameModule, descriptionModule } = req.body;
-        const newModule = new Module(null, nameModule, descriptionModule);
-        newModule.save((err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.status(201).json(result);
-        });
+        try {
+            const module = await Module.create(req.body);
+            res.status(201).json(module);
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static updateModule(req, res) {
+    static async updateModule(req, res) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { id, nameModule, descriptionModule } = req.body;
-        const updatedModule = new Module(id, nameModule, descriptionModule);
-        updatedModule.save((err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.json(result);
-        });
+        try {
+            await Module.update(req.body, { where: { id: req.params.id } });
+            const updatedModule = await Module.findByPk(req.params.id);
+            res.json(updatedModule);
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static deleteModule(req, res) {
-        const moduleId = req.params.id;
-        Module.deleteModule(moduleId, (err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.json(result);
-        });
+    static async deleteModule(req, res) {
+        try {
+            await Module.destroy({ where: { id: req.params.id } });
+            res.json({ message: 'Module deleted successfully' });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static searchModuleByName(req, res) {
-        const name = req.params.name;
-        Module.searchModuleByName(name, (err, modules) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+    static async searchModuleByName(req, res) {
+        try {
+            const modules = await Module.findAll({ where: { nameModule: { [Op.like]: `%${req.params.name}%` } } });
             res.json(modules);
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static getModulesByPage(req, res) {
+    static async getModulesByPage(req, res) {
         const { limit, offset } = req.query;
-        Module.getModulesByPage(parseInt(limit), parseInt(offset), (err, modules) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+        try {
+            const modules = await Module.findAll({ limit: parseInt(limit), offset: parseInt(offset) });
             res.json(modules);
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 }
 

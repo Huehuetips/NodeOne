@@ -1,86 +1,80 @@
 const { validationResult } = require('express-validator');
-const Rank = require('../../models/rankModel');
+const { Rank } = require('../../models');
 
 class RankController {
-    static getAllRanks(req, res) {
-        Rank.getAllRanks((err, ranks) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+    static async getAllRanks(req, res) {
+        try {
+            const ranks = await Rank.findAll();
             res.json(ranks);
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static getRankById(req, res) {
-        const rankId = req.params.id;
-        Rank.getRankById(rankId, (err, rank) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+    static async getRankById(req, res) {
+        try {
+            const rank = await Rank.findByPk(req.params.id);
             res.json(rank);
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static createRank(req, res) {
+    static async createRank(req, res) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { nameRank } = req.body;
-        const newRank = new Rank(null, nameRank);
-        newRank.save((err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.status(201).json(result);
-        });
+        try {
+            const rank = await Rank.create(req.body);
+            res.status(201).json(rank);
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static updateRank(req, res) {
+    static async updateRank(req, res) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { id, nameRank } = req.body;
-        const updatedRank = new Rank(id, nameRank);
-        updatedRank.save((err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.json(result);
-        });
+        try {
+            await Rank.update(req.body, { where: { id: req.params.id } });
+            const updatedRank = await Rank.findByPk(req.params.id);
+            res.json(updatedRank);
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static deleteRank(req, res) {
-        const rankId = req.params.id;
-        Rank.deleteRank(rankId, (err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.json(result);
-        });
+    static async deleteRank(req, res) {
+        try {
+            await Rank.destroy({ where: { id: req.params.id } });
+            res.json({ message: 'Rank deleted successfully' });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static searchRankByName(req, res) {
-        const name = req.params.name;
-        Rank.searchRankByName(name, (err, ranks) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+    static async searchRankByName(req, res) {
+        try {
+            const ranks = await Rank.findAll({ where: { nameRank: { [Op.like]: `%${req.params.name}%` } } });
             res.json(ranks);
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static getRanksByPage(req, res) {
+    static async getRanksByPage(req, res) {
         const { limit, offset } = req.query;
-        Rank.getRanksByPage(parseInt(limit), parseInt(offset), (err, ranks) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+        try {
+            const ranks = await Rank.findAll({ limit: parseInt(limit), offset: parseInt(offset) });
             res.json(ranks);
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 }
 

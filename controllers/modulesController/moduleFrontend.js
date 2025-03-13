@@ -1,37 +1,35 @@
-const Module = require('../../models/moduleModel');
+const { Module } = require('../../models');
 
 class ModuleFrontend {
-    static renderModulesPage(req, res) {
-        Module.getAllModules((err, modules) => {
-            if (err) {
-                return res.status(500).send('Error fetching modules');
-            }
+    static async renderModulesPage(req, res) {
+        try {
+            const modules = await Module.findAll();
             res.render('modules/index', { title: 'Modules', modules });
-        });
+        } catch (err) {
+            res.status(500).send('Error fetching modules');
+        }
     }
 
     static renderCreateModulePage(req, res) {
         res.render('modules/create', { title: 'Crear Módulo' });
     }
 
-    static renderUpdateModulePage(req, res) {
-        const moduleId = req.params.id;
-        Module.getModuleById(moduleId, (err, module) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+    static async renderUpdateModulePage(req, res) {
+        try {
+            const module = await Module.findByPk(req.params.id);
             res.render('modules/update', { title: 'Actualizar Módulo', module });
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static renderModuleDetailPage(req, res) {
-        const moduleId = req.params.id;
-        Module.getModuleById(moduleId, (err, module) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+    static async renderModuleDetailPage(req, res) {
+        try {
+            const module = await Module.findByPk(req.params.id);
             res.render('modules/detail', { title: 'Detalles del Módulo', module });
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 }
 

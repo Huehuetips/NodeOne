@@ -1,96 +1,89 @@
 const { validationResult } = require('express-validator');
-const RankPermission = require('../../models/rankPermissionModel');
+const { RankPermission } = require('../../models');
 
 class RankPermissionController {
-    static getAllRankPermissions(req, res) {
-        RankPermission.getAllRankPermissions((err, rankPermissions) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+    static async getAllRankPermissions(req, res) {
+        try {
+            const rankPermissions = await RankPermission.findAll();
             res.json(rankPermissions);
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static getRankPermissionById(req, res) {
-        const { rankId, permissionId } = req.params;
-        RankPermission.getRankPermissionById(rankId, permissionId, (err, rankPermission) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+    static async getRankPermissionById(req, res) {
+        try {
+            const rankPermission = await RankPermission.findOne({ where: { rankId: req.params.rankId, permissionId: req.params.permissionId } });
             res.json(rankPermission);
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static createRankPermission(req, res) {
+    static async createRankPermission(req, res) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { rankId, permissionId } = req.body;
-        const newRankPermission = new RankPermission(rankId, permissionId);
-        newRankPermission.save((err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.status(201).json(result);
-        });
+        try {
+            const rankPermission = await RankPermission.create(req.body);
+            res.status(201).json(rankPermission);
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static updateRankPermission(req, res) {
+    static async updateRankPermission(req, res) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { rankId, permissionId } = req.body;
-        const updatedRankPermission = new RankPermission(rankId, permissionId);
-        updatedRankPermission.save((err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.json(result);
-        });
+        try {
+            await RankPermission.update(req.body, { where: { rankId: req.params.rankId, permissionId: req.params.permissionId } });
+            const updatedRankPermission = await RankPermission.findOne({ where: { rankId: req.params.rankId, permissionId: req.params.permissionId } });
+            res.json(updatedRankPermission);
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static deleteRankPermission(req, res) {
-        const { rankId, permissionId } = req.params;
-        RankPermission.deleteRankPermission(rankId, permissionId, (err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.json(result);
-        });
+    static async deleteRankPermission(req, res) {
+        try {
+            await RankPermission.destroy({ where: { rankId: req.params.rankId, permissionId: req.params.permissionId } });
+            res.json({ message: 'Rank Permission deleted successfully' });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static searchRankPermissionsByRank(req, res) {
-        const rankId = req.params.rankId;
-        RankPermission.searchRankPermissionsByRank(rankId, (err, rankPermissions) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+    static async searchRankPermissionsByRank(req, res) {
+        try {
+            const rankPermissions = await RankPermission.findAll({ where: { rankId: req.params.rankId } });
             res.json(rankPermissions);
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static searchRankPermissionsByPermission(req, res) {
-        const permissionId = req.params.permissionId;
-        RankPermission.searchRankPermissionsByPermission(permissionId, (err, rankPermissions) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+    static async searchRankPermissionsByPermission(req, res) {
+        try {
+            const rankPermissions = await RankPermission.findAll({ where: { permissionId: req.params.permissionId } });
             res.json(rankPermissions);
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static getRankPermissionsByPage(req, res) {
+    static async getRankPermissionsByPage(req, res) {
         const { limit, offset } = req.query;
-        RankPermission.getRankPermissionsByPage(parseInt(limit), parseInt(offset), (err, rankPermissions) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+        try {
+            const rankPermissions = await RankPermission.findAll({ limit: parseInt(limit), offset: parseInt(offset) });
             res.json(rankPermissions);
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 }
 

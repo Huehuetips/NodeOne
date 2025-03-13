@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 require('dotenv').config();
 
 const connection = mysql.createConnection({
@@ -90,10 +90,6 @@ const insertUserData = [
     `CALL createUser('Hank Irving', 'hank_irving', 'hank@example.com', 'password123', 5, 2, 2)`,
     `CALL createUser('Otro Nombre', 'otro_nombre', 'nombre@example.com', 'password123', 2, 2, 2)`,
 ];
-
-
-
-
 
 connection.connect(err => {
     if (err) throw err;

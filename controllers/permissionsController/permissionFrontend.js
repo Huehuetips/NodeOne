@@ -1,37 +1,35 @@
-const Permission = require('../../models/permissionModel');
+const { Permission } = require('../../models');
 
 class PermissionFrontend {
-    static renderPermissionsPage(req, res) {
-        Permission.getAllPermissions((err, permissions) => {
-            if (err) {
-                return res.status(500).send('Error fetching permissions');
-            }
+    static async renderPermissionsPage(req, res) {
+        try {
+            const permissions = await Permission.findAll();
             res.render('permissions/index', { title: 'Permissions', permissions });
-        });
+        } catch (err) {
+            res.status(500).send('Error fetching permissions');
+        }
     }
 
     static renderCreatePermissionPage(req, res) {
         res.render('permissions/create', { title: 'Crear Permiso' });
     }
 
-    static renderUpdatePermissionPage(req, res) {
-        const permissionId = req.params.id;
-        Permission.getPermissionById(permissionId, (err, permission) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+    static async renderUpdatePermissionPage(req, res) {
+        try {
+            const permission = await Permission.findByPk(req.params.id);
             res.render('permissions/update', { title: 'Actualizar Permiso', permission });
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static renderPermissionDetailPage(req, res) {
-        const permissionId = req.params.id;
-        Permission.getPermissionById(permissionId, (err, permission) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+    static async renderPermissionDetailPage(req, res) {
+        try {
+            const permission = await Permission.findByPk(req.params.id);
             res.render('permissions/detail', { title: 'Detalles del Permiso', permission });
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 }
 

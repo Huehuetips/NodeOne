@@ -1,77 +1,52 @@
-const User = require('../../models/userModel');
-const Rank = require('../../models/rankModel');
+const { User, Rank } = require('../../models');
 
 class userFrontend {    
-    static renderUsersPage(req, res) {
-        User.getAllUsers((err, users) => {
-            if (err) {
-                return res.status(500).send('Error fetching users');
-            }
-    
-            // Fetch the creator's name for each user
-            const userPromises = users.map(user => {
-                return new Promise((resolve, reject) => {
-                    User.getUserById(user.createUserId, (err, creator) => {
-                        if (err) {
-                            return reject(err);
-                        }
-                        user.createUserId = creator;
-                    });
-                    Rank.getRankById(user.rankId, (err, creator) => {
-                        if (err) {
-                            return reject(err);
-                        }
-                        user.rankId = creator;
-                    });
-                    User.getUserById(user.writeUserId, (err, creator) => {
-                        if (err) {
-                            return reject(err);
-                        }
-                        user.writeUserId = creator;
-                        resolve(user);
-                    });
-                });
+    static async renderUsersPage(req, res) {
+        try {
+            const users = await User.findAll({
+                include: [
+                    { model: User, as: 'creator', attributes: ['nameUser'] },
+                    { model: User, as: 'writer', attributes: ['nameUser'] },
+                    { model: Rank, attributes: ['nameRank'] }
+                ]
             });
-
-            Promise.all(userPromises)
-                .then(usersWithCreators => {
-                    res.render('users/index', { title: 'Users', users: usersWithCreators });
-                })
-                .catch(err => {
-                    res.status(500).send('Error fetching user creators');
-                });
-        });
+            res.render('users/index', { title: 'Users', users });
+        } catch (err) {
+            res.status(500).send('Error fetching users');
+        }
     }
 
-    static renderCreateUserPage(req, res) {
-        const limit = 10; // Limitar a los primeros 10 rangos
-        const offset = 0;
-        Rank.getRanksByPage(limit, offset, (err, ranks) => {
-            if (err) {
-                return res.status(500).send('Error fetching ranks');
-            }
+    static async renderCreateUserPage(req, res) {
+        try {
+            const ranks = await Rank.findAll({ limit: 10 });
             res.render('users/create', { title: 'Crear Usuario', ranks });
-        });
+        } catch (err) {
+            res.status(500).send('Error fetching ranks');
+        }
     }
 
-    static renderUpdateUserPage(req, res) {
-        const userId = req.params.id;
-        User.getUserById(userId, (err, user) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+    static async renderUpdateUserPage(req, res) {
+        try {
+            const user = await User.findByPk(req.params.id);
             res.render('users/update', { title: 'Actualizar Usuario', user });
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static renderUserDetailPage(req, res) {
-        const userId = req.params.id;
-        User.getUserById(userId, (err, user) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+    static async renderUserDetailPage(req, res) {
+        try {
+            const user = await User.findByPk(req.params.id, {
+                include: [
+                    { model: User, as: 'creator', attributes: ['nameUser'] },
+                    { model: User, as: 'writer', attributes: ['nameUser'] },
+                    { model: Rank, attributes: ['nameRank'] }
+                ]
+            });
             res.render('users/detail', { title: 'Detalles del Usuario', user });
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 }
 

@@ -1,111 +1,90 @@
 const { validationResult } = require('express-validator');
-const User = require('../../models/userModel');
+const { User } = require('../../models');
 
 class UserController {
-    static getAllUsers(req, res) {
-        User.getAllUsers((err, users) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.json(users); // Asegúrate de devolver JSON
-        });
+    static async getAllUsers(req, res) {
+        try {
+            const users = await User.findAll();
+            res.json(users);
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static getUserById(req, res) {
-        const userId = req.params.id;
-        User.getUserById(userId, (err, user) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.json(user); // Asegúrate de devolver JSON
-        });
+    static async getUserById(req, res) {
+        try {
+            const user = await User.findByPk(req.params.id);
+            res.json(user);
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static createUser(req, res) {
+    static async createUser(req, res) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.json({ errors: errors.array()});
+            return res.json({ errors: errors.array() });
         }
 
-        const { name, user, email, password, rankId, createUserId, writeUserId } = req.body;
-        const newUser = new User(null, rankId, name, user, email, password, 1, createUserId, writeUserId);
-        newUser.save((err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.status(201).json(result);
-        });
+        try {
+            const user = await User.create(req.body);
+            res.status(201).json(user);
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static updateUser(req, res) {
+    static async updateUser(req, res) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            console.log('Validation errors:', errors.array());
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { id, name, user, email, password, enable, rankId, writeUserId } = req.body;
-        const updatedUser = new User(id, rankId, name, user, email, password, enable, null, writeUserId);
-        updatedUser.save((err, result) => {
-            if (err) {
-                console.log('Error updating user:', err);
-                console.log('Received data:', { id, name, user, email, password, enable, rankId, writeUserId });
-                return res.status(500).send(err);
-            }
-            res.json(result);
-        });
+        try {
+            await User.update(req.body, { where: { id: req.params.id } });
+            const updatedUser = await User.findByPk(req.params.id);
+            res.json(updatedUser);
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static deleteUser(req, res) {
-        const userId = req.params.id;
-        User.deleteUser(userId, (err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.json(result);
-        });
+    static async deleteUser(req, res) {
+        try {
+            await User.destroy({ where: { id: req.params.id } });
+            res.json({ message: 'User deleted successfully' });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static searchUserByName(req, res) {
-        const name = req.params.name;
-        User.searchUserByName(name, (err, users) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+    static async searchUserByName(req, res) {
+        try {
+            const users = await User.findAll({ where: { nameUser: { [Op.like]: `%${req.params.name}%` } } });
             res.json(users);
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static getUsersByPage(req, res) {
+    static async getUsersByPage(req, res) {
         const { limit, offset } = req.query;
-        User.getUsersByPage(parseInt(limit), parseInt(offset), (err, users) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+        try {
+            const users = await User.findAll({ limit: parseInt(limit), offset: parseInt(offset) });
             res.json(users);
-        });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
 
-    static disableUser(req, res) {
-        const userId = req.params.id;
-        User.disableUser(userId, (err, result) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.json(result);
-        });
+    static async disableUser(req, res) {
+        try {
+            await User.update({ enable: false }, { where: { id: req.params.id } });
+            res.json({ message: 'User disabled successfully' });
+        } catch (err) {
+            res.status(500).send(err);
+        }
     }
-
-    static renderUsersPage(req, res) {
-        User.getAllUsers((err, users) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.render('users', { title: 'Users Page', users: users }); // Usar layout predeterminado
-        });
-    }
-
-    // ...other methods for creating, updating, and deleting users...
 }
 
 module.exports = UserController;
