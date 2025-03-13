@@ -1,10 +1,16 @@
 const { validationResult } = require('express-validator');
-const { Rank } = require('../../models');
+const { Rank, Permission, User } = require('../../models');
 
 class RankController {
     static async getAllRanks(req, res) {
         try {
-            const ranks = await Rank.findAll();
+            const ranks = await Rank.findAll({ 
+                include: [
+                    Permission, 
+                    { model: User, as: 'createUser' },
+                    { model: User, as: 'writeUser' }
+                ]
+            });
             res.json(ranks);
         } catch (err) {
             res.status(500).send(err);
@@ -13,7 +19,13 @@ class RankController {
 
     static async getRankById(req, res) {
         try {
-            const rank = await Rank.findByPk(req.params.id);
+            const rank = await Rank.findByPk(req.params.id, { 
+                include: [
+                    Permission,
+                    { model: User, as: 'createUser' },
+                    { model: User, as: 'writeUser' }
+                ]
+            });
             res.json(rank);
         } catch (err) {
             res.status(500).send(err);
@@ -28,7 +40,14 @@ class RankController {
 
         try {
             const rank = await Rank.create(req.body);
-            res.status(201).json(rank);
+            const newRank = await Rank.findByPk(rank.id, { 
+                include: [
+                    Permission,
+                    { model: User, as: 'createUser' },
+                    { model: User, as: 'writeUser' }
+                ]
+            });
+            res.status(201).json(newRank);
         } catch (err) {
             res.status(500).send(err);
         }
@@ -42,7 +61,13 @@ class RankController {
 
         try {
             await Rank.update(req.body, { where: { id: req.params.id } });
-            const updatedRank = await Rank.findByPk(req.params.id);
+            const updatedRank = await Rank.findByPk(req.params.id, { 
+                include: [
+                    Permission,
+                    { model: User, as: 'createUser' },
+                    { model: User, as: 'writeUser' }
+                ]
+            });
             res.json(updatedRank);
         } catch (err) {
             res.status(500).send(err);
@@ -60,7 +85,14 @@ class RankController {
 
     static async searchRankByName(req, res) {
         try {
-            const ranks = await Rank.findAll({ where: { nameRank: { [Op.like]: `%${req.params.name}%` } } });
+            const ranks = await Rank.findAll({ 
+                where: { nameRank: { [Op.like]: `%${req.params.name}%` } },
+                include: [
+                    Permission,
+                    { model: User, as: 'createUser' },
+                    { model: User, as: 'writeUser' }
+                ]
+            });
             res.json(ranks);
         } catch (err) {
             res.status(500).send(err);
@@ -70,7 +102,15 @@ class RankController {
     static async getRanksByPage(req, res) {
         const { limit, offset } = req.query;
         try {
-            const ranks = await Rank.findAll({ limit: parseInt(limit), offset: parseInt(offset) });
+            const ranks = await Rank.findAll({ 
+                limit: parseInt(limit), 
+                offset: parseInt(offset),
+                include: [
+                    Permission,
+                    { model: User, as: 'createUser' },
+                    { model: User, as: 'writeUser' }
+                ]
+            });
             res.json(ranks);
         } catch (err) {
             res.status(500).send(err);

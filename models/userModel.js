@@ -11,7 +11,7 @@ User.init({
     },
     rankId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
     },
     nameUser: {
         type: DataTypes.STRING,
@@ -41,19 +41,10 @@ User.init({
         type: DataTypes.INTEGER,
         defaultValue: 1,
     },
-    createdAtUser: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-    },
-    writedAtUser: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-    },
 }, {
     sequelize,
     modelName: 'User',
     tableName: 'users',
-    timestamps: false,
 });
 
 module.exports = User;

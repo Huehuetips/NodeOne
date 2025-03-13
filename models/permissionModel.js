@@ -25,19 +25,10 @@ Permission.init({
         type: DataTypes.INTEGER,
         defaultValue: 1,
     },
-    createdAtPermission: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-    },
-    writedAtPermission: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-    },
 }, {
     sequelize,
     modelName: 'Permission',
     tableName: 'permissions',
-    timestamps: false,
 });
 
 module.exports = Permission;

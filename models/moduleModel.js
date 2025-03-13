@@ -17,19 +17,10 @@ Module.init({
         type: DataTypes.STRING,
         allowNull: false,
     },
-    createdAtModule: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-    },
-    writedAtModule: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-    },
 }, {
     sequelize,
     modelName: 'Module',
     tableName: 'modules',
-    timestamps: false,
 });
 
 module.exports = Module;

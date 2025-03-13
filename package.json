@@ -3,11 +3,19 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build:css": "npx tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch",
-    "db:init": "node scripts/init-db.js",
-    "db:seed": "npm run db:init && node scripts/seed-db.js",
-    "start": "npm run db:seed && node app.js"
+    "production": "NODE_ENV=production node app.js",
+    "dev": "nodemon app.js",
+
+    "db:clean": "node scripts/clean.js",
+    "db:initData": "node scripts/initial.js",
+    "db:seedData": "node scripts/seed.js",
+
+    "db:start": "npm run db:clean && npm run db:initData",
+    "db:startSeed": "npm run db:start && npm run db:seedData",
+    
+    "start": "npm run db:start && npm run dev",
+    "startSeed": "npm run db:startSeed && npm run dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +31,7 @@
     "moment": "^2.30.1",
     "morgan": "^1.10.0",
     "mysql2": "^3.13.0",
+    "nodemon": "^3.1.9",
     "sequelize": "^6.37.6"
   }
 }

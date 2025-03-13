@@ -1,10 +1,16 @@
 const { validationResult } = require('express-validator');
-const { Permission } = require('../../models');
+const { Permission, Rank, User } = require('../../models');
 
 class PermissionController {
     static async getAllPermissions(req, res) {
         try {
-            const permissions = await Permission.findAll();
+            const permissions = await Permission.findAll({ 
+                include: [
+                    Rank,
+                    { model: User, as: 'createUser' },
+                    { model: User, as: 'writeUser' }
+                ]
+            });
             res.json(permissions);
         } catch (err) {
             res.status(500).send(err);
@@ -13,7 +19,12 @@ class PermissionController {
 
     static async getPermissionById(req, res) {
         try {
-            const permission = await Permission.findByPk(req.params.id);
+            const permission = await Permission.findByPk(req.params.id, { 
+                include: [
+                    { model: User, as: 'createUser' },
+                    { model: User, as: 'writeUser' }
+                ]
+            });
             res.json(permission);
         } catch (err) {
             res.status(500).send(err);
@@ -28,7 +39,13 @@ class PermissionController {
 
         try {
             const permission = await Permission.create(req.body);
-            res.status(201).json(permission);
+            const newPermission = await Permission.findByPk(permission.id, { 
+                include: [
+                    { model: User, as: 'createUser' },
+                    { model: User, as: 'writeUser' }
+                ]
+            });
+            res.status(201).json(newPermission);
         } catch (err) {
             res.status(500).send(err);
         }
@@ -42,7 +59,12 @@ class PermissionController {
 
         try {
             await Permission.update(req.body, { where: { id: req.params.id } });
-            const updatedPermission = await Permission.findByPk(req.params.id);
+            const updatedPermission = await Permission.findByPk(req.params.id, { 
+                include: [
+                    { model: User, as: 'createUser' },
+                    { model: User, as: 'writeUser' }
+                ]
+            });
             res.json(updatedPermission);
         } catch (err) {
             res.status(500).send(err);
@@ -60,7 +82,13 @@ class PermissionController {
 
     static async searchPermissionByName(req, res) {
         try {
-            const permissions = await Permission.findAll({ where: { namePermission: { [Op.like]: `%${req.params.name}%` } } });
+            const permissions = await Permission.findAll({ 
+                where: { namePermission: { [Op.like]: `%${req.params.name}%` } },
+                include: [
+                    { model: User, as: 'createUser' },
+                    { model: User, as: 'writeUser' }
+                ]
+            });
             res.json(permissions);
         } catch (err) {
             res.status(500).send(err);
@@ -70,7 +98,14 @@ class PermissionController {
     static async getPermissionsByPage(req, res) {
         const { limit, offset } = req.query;
         try {
-            const permissions = await Permission.findAll({ limit: parseInt(limit), offset: parseInt(offset) });
+            const permissions = await Permission.findAll({ 
+                limit: parseInt(limit), 
+                offset: parseInt(offset),
+                include: [
+                    { model: User, as: 'createUser' },
+                    { model: User, as: 'writeUser' }
+                ]
+            });
             res.json(permissions);
         } catch (err) {
             res.status(500).send(err);

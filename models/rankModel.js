@@ -20,20 +20,11 @@ Rank.init({
     writeUserId: {
         type: DataTypes.INTEGER,
         defaultValue: 1,
-    },
-    createdAtRank: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-    },
-    writedAtRank: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-    },
+    }
 }, {
     sequelize,
     modelName: 'Rank',
     tableName: 'ranks',
-    timestamps: false,
 });
 
 module.exports = Rank;

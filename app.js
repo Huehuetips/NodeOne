@@ -1,4 +1,6 @@
 const express = require('express');
+const sequelize = require('./config/database');
+const models = require('./models');
 const app = express();
 const apiRoutes = require('./routes/api');
 const frontendRoutes = require('./routes/frontend');
@@ -37,7 +39,9 @@ app.use((req, res, next) => {
     res.status(404).render('404', { title: '404 - Not Found' , layout : 'layouts/clean' });
 });
 
-const PORT = process.env.APP_PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+
+app.listen(process.env.APP_PORT, () => {
+    console.log(`Server is running on port http://localhost:${process.env.APP_PORT}`);
 });
+
+module.exports = app;
