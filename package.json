@@ -7,6 +7,7 @@
     "dev": "nodemon app.js",
 
     "db:clean": "node scripts/clean.js",
+    "db:clean_": "",
     "db:initData": "node scripts/initial.js",
     "db:seedData": "node scripts/seed.js",
 

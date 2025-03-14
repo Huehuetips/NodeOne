@@ -1,4 +1,4 @@
-<h1><%= title %></h1>
+
 <div>
     <table>
         <thead>
@@ -20,14 +20,14 @@
             <tr>
                 <td><%= index + 1 %></td>
                 <td><%= user.nameUser %></td>
-                <td><%= user.user %></td>
-                <td><%= user.email %></td>
-                <td><%= user.rankId.nameRank %></td>
-                <td><%= user.enable %></td>
-                <td><%= user.createdAtUser %></td>
-                <td><%= user.writedAtUser %></td>
-                <td><%= user.createUserId.nameUser %></td>
-                <td><%= user.writeUserId.nameUser %></td>
+                <td><%= user.userUser %></td>
+                <td><%= user.emailUser %></td>
+                <td><%= user.Rank.nameRank %></td>
+                <td><%= user.enable ? 'Sí' : 'No' %></td>
+                <td><%= new Date(user.createdAt).toLocaleDateString('es-ES') %></td>
+                <td><%= new Date(user.updatedAt).toLocaleDateString('es-ES') %></td>
+                <td><%= user.createUser.nameUser %></td>
+                <td><%= user.writeUser.nameUser %></td>
             </tr>
             <% }) %>
         </tbody>

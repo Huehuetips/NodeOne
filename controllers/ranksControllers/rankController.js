@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator');
-const { Rank, Permission, User } = require('../../models');
+const { Rank, Permission } = require('../../models');
+const { Op } = require('sequelize');
 
 class RankController {
     static async getAllRanks(req, res) {
@@ -7,8 +8,8 @@ class RankController {
             const ranks = await Rank.findAll({ 
                 include: [
                     Permission, 
-                    { model: User, as: 'createUser' },
-                    { model: User, as: 'writeUser' }
+                    { association: 'createUser' },
+                    { association: 'writeUser' }
                 ]
             });
             res.json(ranks);
@@ -22,8 +23,8 @@ class RankController {
             const rank = await Rank.findByPk(req.params.id, { 
                 include: [
                     Permission,
-                    { model: User, as: 'createUser' },
-                    { model: User, as: 'writeUser' }
+                    { association: 'createUser' },
+                    { association: 'writeUser' }
                 ]
             });
             res.json(rank);
@@ -43,8 +44,8 @@ class RankController {
             const newRank = await Rank.findByPk(rank.id, { 
                 include: [
                     Permission,
-                    { model: User, as: 'createUser' },
-                    { model: User, as: 'writeUser' }
+                    { association: 'createUser' },
+                    { association: 'writeUser' }
                 ]
             });
             res.status(201).json(newRank);
@@ -64,8 +65,8 @@ class RankController {
             const updatedRank = await Rank.findByPk(req.params.id, { 
                 include: [
                     Permission,
-                    { model: User, as: 'createUser' },
-                    { model: User, as: 'writeUser' }
+                    { association: 'createUser' },
+                    { association: 'writeUser' }
                 ]
             });
             res.json(updatedRank);
@@ -87,11 +88,11 @@ class RankController {
         try {
             const ranks = await Rank.findAll({ 
                 where: { nameRank: { [Op.like]: `%${req.params.name}%` } },
-                include: [
-                    Permission,
-                    { model: User, as: 'createUser' },
-                    { model: User, as: 'writeUser' }
-                ]
+                // include: [
+                //     Permission,
+                //     { association: 'createUser' },
+                //     { association: 'writeUser' }
+                // ],
             });
             res.json(ranks);
         } catch (err) {
@@ -107,8 +108,8 @@ class RankController {
                 offset: parseInt(offset),
                 include: [
                     Permission,
-                    { model: User, as: 'createUser' },
-                    { model: User, as: 'writeUser' }
+                    { association: 'createUser' },
+                    { association: 'writeUser' }
                 ]
             });
             res.json(ranks);

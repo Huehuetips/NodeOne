@@ -17,6 +17,7 @@ const dropAllTables = [
     `DROP TABLE IF EXISTS ranks;`,
     `DROP TABLE IF EXISTS permissions;`,
     `DROP TABLE IF EXISTS modules;`,
+    `DROP TABLE IF EXISTS sessions;`,
     `SET FOREIGN_KEY_CHECKS = 1;`
 ];
 

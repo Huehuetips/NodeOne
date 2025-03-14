@@ -17,7 +17,7 @@
     <input type="number" id="rankId" name="rankId" value="<%= user.rankId %>" required>
     <br>
     <label for="enable">Enable:</label>
-    <input type="checkbox" id="enable" name="enable" <%= user.enable === 'Sí' ? 'checked' : '' %>>
+    <input type="checkbox" id="enable" name="enable" <%= user.enable ? 'checked' : '' %>>
     <br>
     <button type="submit">Actualizar</button>
 </form>

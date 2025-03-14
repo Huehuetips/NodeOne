@@ -1,8 +1,7 @@
-const { Module, User, Rank, Permission, sequelize } = require('../models');
+const { Module, User, Rank, Permission, Session, sequelize } = require('../models'); // Añadir Session
 
 const seedDatabase = async () => {
     try {
-        // await sequelize.sync({ force: true });
 
         // Insertar módulos
         const usersModule = await Module.create({ nameModule: 'Users', descriptionModule: 'Módulo de Usuarios' });
@@ -20,17 +19,17 @@ const seedDatabase = async () => {
         const superUserRank = await Rank.create({ nameRank: 'Super User', createUserId: 1, writeUserId: 1 });
         
         // Insertar usuarios
-        await User.create({ nameUser: 'John Doe', userUser: 'john_doe', emailUser: 'john@example.com', passwordUser: 'password123', rankId: usersAdminRank.id });
-        await User.create({ nameUser: 'Jane Smith', userUser: 'jane_smith', emailUser: 'jane@example.com', passwordUser: 'password123', rankId: usersAdminRank.id });
-        await User.create({ nameUser: 'Alice Johnson', userUser: 'alice_johnson', emailUser: 'alice@example.com', passwordUser: 'password123', rankId: usersAdminRank.id });
-        await User.create({ nameUser: 'Bob Brown', userUser: 'bob_brown', emailUser: 'bob@example.com', passwordUser: 'password123', rankId: viewerRank.id });
-        await User.create({ nameUser: 'Charlie Davis', userUser: 'charlie_davis', emailUser: 'charlie@example.com', passwordUser: 'password123', rankId: moderatorRank.id });
-        await User.create({ nameUser: 'Diana Evans', userUser: 'diana_evans', emailUser: 'diana@example.com', passwordUser: 'password123', rankId: superUserRank.id });
-        await User.create({ nameUser: 'Eve Foster', userUser: 'eve_foster', emailUser: 'eve@example.com', passwordUser: 'password123', rankId: usersAdminRank.id });
-        await User.create({ nameUser: 'Frank Green', userUser: 'frank_green', emailUser: 'frank@example.com', passwordUser: 'password123', rankId: usersAdminRank.id });
-        await User.create({ nameUser: 'Grace Harris', userUser: 'grace_harris', emailUser: 'grace@example.com', passwordUser: 'password123', rankId: usersAdminRank.id, createUserId: 3, writeUserId: 5 });
-        await User.create({ nameUser: 'Hank Irving', userUser: 'hank_irving', emailUser: 'hank@example.com', passwordUser: 'password123', rankId: viewerRank.id, createUserId: 3, writeUserId: 5 });
-        await User.create({ nameUser: 'Otro Nombre', userUser: 'otro_nombre', emailUser: 'nombre@example.com', passwordUser: 'password123', rankId: usersAdminRank.id, createUserId: 3, writeUserId: 5 });
+        const user1 = await User.create({ nameUser: 'John Doe', userUser: 'john_doe', emailUser: 'john@example.com', passwordUser: 'password123', rankId: usersAdminRank.id });
+        const user2 = await User.create({ nameUser: 'Jane Smith', userUser: 'jane_smith', emailUser: 'jane@example.com', passwordUser: 'password123', rankId: usersAdminRank.id });
+        const user3 = await User.create({ nameUser: 'Alice Johnson', userUser: 'alice_johnson', emailUser: 'alice@example.com', passwordUser: 'password123', rankId: usersAdminRank.id });
+        const user4 = await User.create({ nameUser: 'Bob Brown', userUser: 'bob_brown', emailUser: 'bob@example.com', passwordUser: 'password123', rankId: viewerRank.id });
+        const user5 = await User.create({ nameUser: 'Charlie Davis', userUser: 'charlie_davis', emailUser: 'charlie@example.com', passwordUser: 'password123', rankId: moderatorRank.id });
+        const user6 = await User.create({ nameUser: 'Diana Evans', userUser: 'diana_evans', emailUser: 'diana@example.com', passwordUser: 'password123', rankId: superUserRank.id });
+        const user7 = await User.create({ nameUser: 'Eve Foster', userUser: 'eve_foster', emailUser: 'eve@example.com', passwordUser: 'password123', rankId: usersAdminRank.id });
+        const user8 = await User.create({ nameUser: 'Frank Green', userUser: 'frank_green', emailUser: 'frank@example.com', passwordUser: 'password123', rankId: usersAdminRank.id });
+        const user9 = await User.create({ nameUser: 'Grace Harris', userUser: 'grace_harris', emailUser: 'grace@example.com', passwordUser: 'password123', rankId: usersAdminRank.id, createUserId: 3, writeUserId: 5 });
+        const user10 = await User.create({ nameUser: 'Hank Irving', userUser: 'hank_irving', emailUser: 'hank@example.com', passwordUser: 'password123', rankId: viewerRank.id, createUserId: 3, writeUserId: 5 });
+        const user11 = await User.create({ nameUser: 'Otro Nombre', userUser: 'otro_nombre', emailUser: 'nombre@example.com', passwordUser: 'password123', rankId: usersAdminRank.id, createUserId: 3, writeUserId: 5 });
         
         // Insertar permisos
         const createUsersPermission = await Permission.create({ namePermission: 'CREATE', moduleId: usersModule.id, createUserId: 1, writeUserId: 1 });
@@ -58,6 +57,10 @@ const seedDatabase = async () => {
         await moderatorRank.addPermissions([createRanksPermission, readRanksPermission, writeRanksPermission, deleteRanksPermission]);
         await editorRank.addPermissions([createPermissionsPermission, readPermissionsPermission, writePermissionsPermission, deletePermissionsPermission]);
         await superUserRank.addPermissions([createUsersPermission, readUsersPermission, createRanksPermission, readRanksPermission, createPermissionsPermission, readPermissionsPermission, createChatPermission, readChatPermission, writeChatPermission, deleteChatPermission]);
+
+        // Insertar sesiones
+        await Session.create({ userId: user1.id, deviceInfo: 'Chrome on Windows 10', startTimeSession: new Date(), lastConnectionTimeSession: new Date(), keepActiveSession: true, });
+        await Session.create({ userId: user2.id, deviceInfo: 'Firefox on macOS', startTimeSession: new Date(), lastConnectionTimeSession: new Date(), keepActiveSession: false, });
 
         console.log('Database seeded successfully!');
     } catch (err) {

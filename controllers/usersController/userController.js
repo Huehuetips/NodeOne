@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 const { User , Rank } = require('../../models');
 const { Op } = require('sequelize');
+const { Session } = require('express-session');
 
 class UserController {
     static async getAllUsers(req, res) {
@@ -8,8 +9,8 @@ class UserController {
             const users = await User.findAll({
                 include: [
                     Rank,
-                    { model: User, as: 'createUser' },
-                    { model: User, as: 'writeUser' }
+                    { association: 'createUser' },
+                    { association: 'writeUser' },
                 ]
             });
             res.json(users);
@@ -23,8 +24,8 @@ class UserController {
             const user = await User.findByPk(req.params.id, {
                 include: [
                     Rank,
-                    { model: User, as: 'createUser' },
-                    { model: User, as: 'writeUser' }
+                    { association: 'createUser' },
+                    { association: 'writeUser' }
                 ]
             });
             res.json(user);
@@ -44,8 +45,8 @@ class UserController {
             const user = await User.findByPk(user.id, {
                 include: [
                     Rank,
-                    { model: User, as: 'createUser' },
-                    { model: User, as: 'writeUser' }
+                    { association: 'createUser' },
+                    { association: 'writeUser' }
                 ]
             });
             res.status(201).json(user);
@@ -65,8 +66,8 @@ class UserController {
             const updatedUser = await User.findByPk(req.params.id, {
                 include: [
                     Rank,
-                    { model: User, as: 'createUser' },
-                    { model: User, as: 'writeUser' }
+                    { association: 'createUser' },
+                    { association: 'writeUser' }
                 ]
             });
             res.json(updatedUser);
@@ -90,8 +91,8 @@ class UserController {
                 where: { nameUser: { [Op.like]: `%${req.params.name}%` } },
                 include: [
                     Rank,
-                    { model: User, as: 'createUser' },
-                    { model: User, as: 'writeUser' }
+                    { association: 'createUser' },
+                    { association: 'writeUser' }
                 ]
             });
             res.json(users);
@@ -108,8 +109,8 @@ class UserController {
                 offset: parseInt(offset),
                 include: [
                     Rank,
-                    { model: User, as: 'createUser' },
-                    { model: User, as: 'writeUser' }
+                    { association: 'createUser' },
+                    { association: 'writeUser' }
                 ]
             });
             res.json(users);
@@ -124,8 +125,8 @@ class UserController {
             const updatedUser = await User.findByPk(req.params.id, {
                 include: [
                     Rank,
-                    { model: User, as: 'createUser' },
-                    { model: User, as: 'writeUser' }
+                    { association: 'createUser' },
+                    { association: 'writeUser' }
                 ]
             });
             res.json(updatedUser);

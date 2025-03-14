@@ -1,14 +1,15 @@
 const { validationResult } = require('express-validator');
-const { Permission, Rank, User } = require('../../models');
+const { Permission, Rank, Module } = require('../../models');
 
 class PermissionController {
     static async getAllPermissions(req, res) {
         try {
             const permissions = await Permission.findAll({ 
                 include: [
+                    Module,
                     Rank,
-                    { model: User, as: 'createUser' },
-                    { model: User, as: 'writeUser' }
+                    { association: 'createUser' },
+                    { association: 'writeUser' }
                 ]
             });
             res.json(permissions);
@@ -21,8 +22,10 @@ class PermissionController {
         try {
             const permission = await Permission.findByPk(req.params.id, { 
                 include: [
-                    { model: User, as: 'createUser' },
-                    { model: User, as: 'writeUser' }
+                    Module,
+                    Rank,
+                    { association: 'createUser' },
+                    { association: 'writeUser' }
                 ]
             });
             res.json(permission);
@@ -41,8 +44,10 @@ class PermissionController {
             const permission = await Permission.create(req.body);
             const newPermission = await Permission.findByPk(permission.id, { 
                 include: [
-                    { model: User, as: 'createUser' },
-                    { model: User, as: 'writeUser' }
+                    Module,
+                    Rank,
+                    { association: 'createUser' },
+                    { association: 'writeUser' }
                 ]
             });
             res.status(201).json(newPermission);
@@ -61,8 +66,10 @@ class PermissionController {
             await Permission.update(req.body, { where: { id: req.params.id } });
             const updatedPermission = await Permission.findByPk(req.params.id, { 
                 include: [
-                    { model: User, as: 'createUser' },
-                    { model: User, as: 'writeUser' }
+                    Module,
+                    Rank,
+                    { association: 'createUser' },
+                    { association: 'writeUser' }
                 ]
             });
             res.json(updatedPermission);
@@ -85,9 +92,11 @@ class PermissionController {
             const permissions = await Permission.findAll({ 
                 where: { namePermission: { [Op.like]: `%${req.params.name}%` } },
                 include: [
-                    { model: User, as: 'createUser' },
-                    { model: User, as: 'writeUser' }
-                ]
+                    Module,
+                    Rank,
+                    { association: 'createUser' },
+                    { association: 'writeUser' }
+                ],
             });
             res.json(permissions);
         } catch (err) {
@@ -102,8 +111,10 @@ class PermissionController {
                 limit: parseInt(limit), 
                 offset: parseInt(offset),
                 include: [
-                    { model: User, as: 'createUser' },
-                    { model: User, as: 'writeUser' }
+                    Module,
+                    Rank,
+                    { association: 'createUser' },
+                    { association: 'writeUser' }
                 ]
             });
             res.json(permissions);

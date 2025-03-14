@@ -4,11 +4,13 @@ const userRoutes = require('./userRoutes');
 const rankRoutes = require('./rankRoutes');
 const permissionRoutes = require('./permissionRoutes');
 const moduleRoutes = require('./moduleRoutes');
+const sessionRoutes = require('./sessionRoutes');
 
 // Administrar las rutas de la API
 router.use('/users', userRoutes);
 router.use('/ranks', rankRoutes);
 router.use('/permissions', permissionRoutes);
 router.use('/modules', moduleRoutes);
+router.use('/sessions', sessionRoutes);
 
 module.exports = router;

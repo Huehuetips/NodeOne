@@ -3,8 +3,9 @@
     --color-black: #000000;
     --color-white: #ffffff;
     --color-gray-dark: #414241;
-    --color-gray-light: #f9f9f9;
     --color-gray-medium: #5b5e5c;
+    --color-gray-mdlight: #8e8f8e;
+    --color-gray-light: #f9f9f9;
     --color-red: #f8d7da;
     --color-red-dark: #721c24;
     --color-green-light: #f1faf6;
@@ -12,16 +13,39 @@
     --color-blue-dark: #0056b3;
     --color-transparent: transparent;
     --color-transparent-black: rgba(0, 0, 0, 0.75);
+    --color-transparent-white: rgba(255, 255, 255, 0.75);
+
+    /* Colores adicionales */
+    --color-yellow: #ffeb3b;
+    --color-yellow-dark: #fbc02d;
+    --color-orange: #ff9800;
+    --color-orange-dark: #f57c00;
+    --color-purple: #9c27b0;
+    --color-purple-dark: #7b1fa2;
+    --color-pink: #e91e63;
+    --color-pink-dark: #c2185b;
+    --color-teal: #009688;
+    --color-teal-dark: #00796b;
+    --color-cyan: #00bcd4;
+    --color-cyan-dark: #0097a7;
+    --color-lime: #cddc39;
+    --color-lime-dark: #afb42b;
+    --color-amber: #ffc107;
+    --color-amber-dark: #ffa000;
+    --color-brown: #795548;
+    --color-brown-dark: #5d4037;
+    --color-bluegray: #607d8b;
+    --color-bluegray-dark: #455a64;
 
     /* Colores principales */
     --primary-color: var(--color-black);
     --secondary-color: var(--color-transparent-black);
-    --background-color: linear-gradient(to bottom, var(--color-white) 0%, #1a1a1a 50%, var(--color-white) 100%);
+    --background-color: linear-gradient(0deg, rgba(24,24,24,1) 0%, rgba(0,0,0,1) 7%, rgba(0,0,0,1) 93%, rgb(41, 41, 41) 100%);
     --header-footer-color: var(--color-transparent);
 
     /* Colores de texto */
-    --text-primary-color: var(--color-black);
-    --text-secondary-color: var(--color-white);
+    --text-primary-color: var(--color-white);
+    --text-secondary-color: var(--color-gray-light);
 
     /* Colores de enlaces */
     --link-color: var(--color-gray-medium);
@@ -30,11 +54,12 @@
     /* Colores de formularios */
     --form-background-color: var(--color-white);
     --form-border-color: var(--color-transparent);
-    --form-input-background-color: var(--color-gray-light);
+    --form-input-background-color: var(--color-gray-medium);
+    --form-input-background-focus-color: var(--color-gray-mdlight);
 
     /* Colores de botones */
-    --button-primary-background: var(--color-black);
-    --button-primary-hover-background: var(--color-gray-dark);
+    --button-primary-background: var(--color-bluegray);
+    --button-primary-hover-background: var(--color-bluegray-dark);
 
     /* Colores de alertas */
     --alert-background-color: var(--color-red);
@@ -49,7 +74,7 @@
     --small-size: 12px;
     --button-size: 16px;
     --input-size: 16px;
-    --label-size: 16px;
+    --label-size: 15px;
     --link-size: 16px;
     --alert-size: 16px;
     --suggestions-size: 16px;
@@ -66,196 +91,36 @@
 
 /* Ejemplo de estilos CSS */
 body {
-    background: rgb(24,24,24);
-    background: linear-gradient(0deg, rgba(24,24,24,1) 0%, rgba(0,0,0,1) 7%, rgba(0,0,0,1) 93%, rgb(41, 41, 41) 100%);
+    background: var(--background-color);
     color: var(--text-secondary-color);
     height: 100vh;
 }
 
-header {
-    background-color: var(--header-footer-color);
-    color: var(--text-secondary-color);
-    text-align: center;
+form {
+    margin: 10px auto;
+    max-width: 95%;
 }
 
-footer {
-    background-color: var(--header-footer-color);
-    color: var(--text-secondary-color);
-    text-align: center;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-}
 
-h1, h2 {
-    color: var(--text-secondary-color);
-}
-
-table {
-    width: 100%;
-}
-
-table, th, td {
-    border: 1px solid var(--secondary-color);
-}
-
-th, td {
-    padding: 2px;
-    text-align: left;
-}
-
-th {
-    background-color: var(--primary-color);
-    color: var(--text-secondary-color);
-}
-
-/* Estilos para la navbar */
-nav {
-    background-color: var(--color-transparent);
-    color: var(--text-secondary-color);
-    /* padding: 10px; */
-}
-
-nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-}
-
-nav ul li {
-    margin: 0 15px;
-}
-
-nav ul li a {
-    color: var(--text-secondary-color);
-    text-decoration: none;
-    font-weight: bold;
-}
-
-nav ul li a:hover {
-    color: var(--link-hover-color);
-}
-
-.container-fluid {
-    padding: 10px 50px 50px;
-}
-
-.container-fluid > a{
-    color: var(--text-secondary-color);
-    text-decoration: none;
-    font-size: var(--subtitle-size);
-    inline-size: 50%;
-}
-
-.navbar-nav .dropdown-menu {
-    position: absolute;
-    float: none;
-    display: none;
-    min-width: 10rem;
-    padding: 0.5rem 0;
-    margin: 0;
-    font-size: 1rem;
-    color: var(--text-secondary-color);
-    text-align: left;
-    list-style: none;
-    background-color: var(--secondary-color);
-    background-clip: padding-box;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 0.25rem;
-}
-
-.navbar-nav .dropdown-menu.show {
-    display: block;
-}
-
-.navbar-nav .dropdown-item {
-    display: block;
-    width: 100%;
-    padding: 0.25rem 1.5rem;
-    clear: both;
-    font-weight: 400;
-    color: var(--text-secondary-color);
-    text-align: inherit;
-    white-space: nowrap;
-    background-color: var(--color-transparent);
-    border: 0;
-}
-
-.navbar-nav .dropdown-item:hover,
-.navbar-nav .dropdown-item:focus {
-    color: var(--text-secondary-color);
-    text-decoration: none;
-    background-color: var(--link-hover-color);
-}
-
-.form-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: var(--color-gray-dark);
-    border: 1px solid var(--form-border-color);
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.form-title {
-    text-align: center;
-    margin-bottom: 20px;
-    color: var(--text-secondary-color);
-}
-
-.form-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: var(--text-secondary-color);
-}
-
-.form-input {
-    width: 100%;
+.error {
     padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid var(--form-border-color);
-    border-radius: 4px;
-    background-color: var(--color-gray-medium);
-    color: var(--text-secondary-color);
-}
-
-.form-button {
-    width: 100%;
-    padding: 10px;
-    background-color: var(--button-primary-background);
-    color: var(--text-secondary-color);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.form-button:hover {
-    background-color: var(--button-primary-hover-background);
-}
-
-.alert {
-    margin-top: 20px;
-    padding: 10px;
-    border: 1px solid var(--alert-border-color);
+    margin-top: 10px;
     background-color: var(--alert-background-color);
+    border: 1px solid var(--alert-border-color);
     color: var(--alert-text-color);
+    font-size: var(--alert-size);
     border-radius: 4px;
 }
 
-.suggestions-list {
+.datafilter {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    max-height: 150px;
+    max-height: 200px;
     overflow-y: auto;
     border: 2px solid var(--secondary-color);
-    border-radius: 4px;
-    background-color: var(--color-white);
+    border-radius:  0 0 4px 4px;
+    background-color: var(--secondary-color);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
     position: absolute;
     z-index: 1000;
@@ -263,12 +128,47 @@ nav ul li a:hover {
     display: none;
 }
 
-.suggestions-list li {
+.datafilter li {
     padding: 10px;
     cursor: pointer;
 }
 
-.suggestions-list li:hover {
+.datafilter li:hover {
     background-color: var(--link-hover-color);
-    color: var (--text-secondary-color);
+    color: var(--text-secondary-color);
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 2px;
+    font-size: var(--label-size);
+    color: var(--text-primary-color);
+}
+
+.form-input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid var(--form-border-color);
+    border-radius: 2px;
+    background-color: var(--form-input-background-color);
+    font-size: var(--input-size);
+}
+
+.form-input:focus {
+    background-color: var(--form-input-background-focus-color);
+}
+
+.form-button {
+    background-color: var(--button-primary-background);
+    color: var(--text-primary-color);
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: var(--button-size);
+}
+
+.form-button:hover {
+    background-color: var(--button-primary-hover-background);
 }

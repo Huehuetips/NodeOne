@@ -5,9 +5,9 @@ class userFrontend {
         try {
             const users = await User.findAll({
                 include: [
-                    { model: User, as: 'creator', attributes: ['nameUser'] },
-                    { model: User, as: 'writer', attributes: ['nameUser'] },
-                    { model: Rank, attributes: ['nameRank'] }
+                    Rank,
+                    { association: 'createUser' },
+                    { association: 'writeUser' },
                 ]
             });
             res.render('users/index', { title: 'Users', users });

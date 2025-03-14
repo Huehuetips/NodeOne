@@ -9,10 +9,6 @@ Rank.init({
         autoIncrement: true,
         primaryKey: true,
     },
-    nameRank: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
     createUserId: {
         type: DataTypes.INTEGER,
         defaultValue: 1,
@@ -20,11 +16,17 @@ Rank.init({
     writeUserId: {
         type: DataTypes.INTEGER,
         defaultValue: 1,
-    }
+    },
+    nameRank: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
 }, {
     sequelize,
     modelName: 'Rank',
     tableName: 'ranks',
 });
+
+
 
 module.exports = Rank;

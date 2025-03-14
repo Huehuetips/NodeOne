@@ -30,7 +30,7 @@ const seedDatabase = async () => {
         await User.create({ nameUser: 'Test', userUser: 'Test', emailUser: 'test@example.com', passwordUser: 'admin123', rankId: superAdminRank.id });
         
         // Eliminar la restricción de clave foránea
-        await sequelize.queryInterface.removeConstraint('users', 'users_ibfk_1');
+        await sequelize.queryInterface.removeConstraint('users', 'users_ibfk_3');
         
         // Modificar el modelo User para que rankId no acepte nulos
         await sequelize.queryInterface.changeColumn('users', 'rankId', {
@@ -42,7 +42,7 @@ const seedDatabase = async () => {
         await sequelize.queryInterface.addConstraint('users', {
             fields: ['rankId'],
             type: 'foreign key',
-            name: 'users_ibfk_1',
+            name: 'users_ibfk_3',
             references: {
                 table: 'ranks',
                 field: 'id',

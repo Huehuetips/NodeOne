@@ -1,23 +1,19 @@
-<h1 class="form-title">Crear Usuario</h1>
-
-<form action="/api/users" method="POST" class="AjaxForm form-container" data-alert-id="divAlert" autocomplete="off">
-    <label for="name" class="form-label">Name:</label>
+<form action="/api/users" method="POST" autocomplete="off" >
+    <label for="name" class="form-label">Nombre:</label>
     <input type="text" id="name" name="name" class="form-input">
     <br>
-    <label for="user" class="form-label">User:</label>
+    <label for="user" class="form-label">Usuario:</label>
     <input type="text" id="user" name="user" class="form-input">
     <br>
-    <label for="email" class="form-label">Email:</label>
+    <label for="email" class="form-label">Correo Electrónico:</label>
     <input type="email" id="email" name="email" class="form-input">
     <br>
-    <label for="password" class="form-label">Password:</label>
+    <label for="password" class="form-label">Contraseña:</label>
     <input type="password" id="password" name="password" class="form-input">
     <br>
     <label for="rankInput" class="form-label">Rango:</label>
-    <input type="text" id="rankInput" name="rankName" class="form-input" data-filter="ranks-rankId-rankSuggestions-_nameRank" oninput="filterData(this)" autocomplete="off">
+    <input type="text" class="data-filter form-input" id="rankInput" name="rankName" autocomplete="off" data-filter="ranks-rankId-nameRank">
     <input type="hidden" id="rankId" name="rankId">
-    <ul id="rankSuggestions" class="suggestions-list"></ul>
     <br>
-    <div id="divAlert"></div>
     <button type="submit" class="form-button">Crear</button>
 </form>
