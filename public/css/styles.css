@@ -96,6 +96,65 @@ body {
     height: 100vh;
 }
 
+/* Estilos generales para la navbar */
+nav {
+    /* background-color: var(--primary-color); */
+    color: var(--text-primary-color);
+    padding: 10px;
+}
+
+nav a {
+    color: var(--text-primary-color);
+    text-decoration: none;
+    padding: 8px 16px;
+    display: inline-block;
+}
+
+nav a:hover {
+    background-color: var(--secondary-color);
+    color: var(--text-secondary-color);
+}
+
+nav button {
+    background: none;
+    border: none;
+    color: var(--text-primary-color);
+    cursor: pointer;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+}
+
+nav ul ul {
+    display: none;
+    position: absolute;
+    background-color: var(--primary-color);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+nav ul li {
+    position: relative;
+}
+
+nav ul li:hover > ul {
+    display: block;
+}
+
+nav ul li ul li {
+    width: 200px;
+}
+
+nav ul li ul li a {
+    padding: 10px;
+    display: block;
+}
+
 form {
     margin: 10px auto;
     max-width: 95%;
