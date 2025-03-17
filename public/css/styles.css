@@ -89,11 +89,17 @@
     font-size: 14px;
 }
 
+html, body {
+    height: 100%;
+}
+
 /* Ejemplo de estilos CSS */
 body {
     background: var(--background-color);
     color: var(--text-secondary-color);
     height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Estilos generales para la navbar */
@@ -231,3 +237,160 @@ form {
 .form-button:hover {
     background-color: var(--button-primary-hover-background);
 }
+
+footer {
+    color: var(--text-primary-color);
+    padding: 20px;
+    text-align: center;
+    margin-top: auto;
+}
+
+.divAlert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 300px;
+    z-index: 1000;
+}
+
+.divAlert:nth-child(3) {
+    top: 20px;
+}
+
+.divAlert:nth-child(4) {
+    top: calc(20px + 1 * 60px);
+}
+
+.divAlert:nth-child(5) {
+    top: calc(20px + 2 * 60px);
+}
+
+.divAlert:nth-child(6) {
+    top: calc(20px + 3 * 60px);
+}
+
+.divAlert:nth-child(7) {
+    top: calc(20px + 4 * 60px);
+}
+
+.divAlert:nth-child(8) {
+    top: calc(20px + 5 * 60px);
+}
+
+.divAlert:nth-child(9) {
+    top: calc(20px + 6 * 60px);
+}
+
+.divAlert:nth-child(10) {
+    top: calc(20px + 7 * 60px);
+}
+
+.divAlert:nth-child(11) {
+    top: calc(20px + 8 * 60px);
+}
+
+.divAlert:nth-child(12) {
+    top: calc(20px + 9 * 60px);
+}
+
+.divAlert:nth-child(13) {
+    top: calc(20px + 9 * 60px);
+}
+
+.divAlert:nth-child(14) {
+    top: calc(20px + 10 * 60px);
+}
+
+.divAlert:nth-child(15) {
+    top: calc(20px + 11 * 60px);
+}
+
+.divAlert:nth-child(16) {
+    top: calc(20px + 12 * 60px);
+}
+
+.divAlert:nth-child(17) {
+    top: calc(20px + 13 * 60px);
+}
+
+.divAlert:nth-child(18) {
+    top: calc(20px + 14 * 60px);
+}
+
+.divAlert:nth-child(19) {
+    top: calc(20px + 15 * 60px);
+}
+
+.divAlert:nth-child(20) {
+    top: calc(20px + 16 * 60px);
+}
+
+.divAlert:nth-child(21) {
+    top: calc(20px + 17 * 60px);
+}
+
+.divAlert:nth-child(22) {
+    top: calc(20px + 18 * 60px);
+}
+
+.divAlert:nth-child(23) {
+    top: calc(20px + 19 * 60px);
+}
+
+.divAlert:nth-child(24) {
+    top: calc(20px + 20 * 60px);
+}
+
+.divAlert:nth-child(25) {
+    top: calc(20px + 21 * 60px);
+}
+
+.divAlert:nth-child(26) {
+    top: calc(20px + 22 * 60px);
+}
+
+.divAlert:nth-child(27) {
+    top: calc(20px + 23 * 60px);
+}
+
+.divAlert:nth-child(28) {
+    top: calc(20px + 24 * 60px);
+}
+
+.divAlert:nth-child(29) {
+    top: calc(20px + 25 * 60px);
+}
+
+
+.alert {
+    padding: 15px;
+    border-radius: 4px;
+    font-size: var(--alert-size);
+    width: 100%;
+    animation: fadeIn 0.5s, fadeOut 2s 4s forwards;
+}
+
+.alert-success {
+    background-color: var(--color-success);
+    border: 1px solid var(--color-success-dark);
+    color: var(--color-success-dark);
+}
+
+.alert-danger {
+    background-color: var(--color-red);
+    border: 1px solid var(--color-red-dark);
+    color: var(--color-red-dark);
+}
+
+.alert-warning {
+    background-color: var(--color-warning);
+    border: 1px solid var(--color-warning-dark);
+    color: var(--color-warning-dark);
+}
+
+.alert-info {
+    background-color: var(--color-info);
+    border: 1px solid var(--color-info-dark);
+    color: var(--color-info-dark);
+}
+

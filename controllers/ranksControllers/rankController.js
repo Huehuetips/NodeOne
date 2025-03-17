@@ -88,11 +88,11 @@ class RankController {
         try {
             const ranks = await Rank.findAll({ 
                 where: { nameRank: { [Op.like]: `%${req.params.name}%` } },
-                // include: [
-                //     Permission,
-                //     { association: 'createUser' },
-                //     { association: 'writeUser' }
-                // ],
+                include: [
+                    Permission,
+                    { association: 'createUser' },
+                    { association: 'writeUser' }
+                ],
             });
             res.json(ranks);
         } catch (err) {

@@ -23,7 +23,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const method = form.getAttribute("method");
         const action = form.getAttribute("action");
         const alertId = form.getAttribute("data-alert-id") || "divAlert";
-        const alertDiv = document.getElementById(alertId);
+        let alertDiv = document.getElementById(alertId);
+
+        alertDiv = document.createElement('div');
+        alertDiv.classList.add('divAlert');
+        alertDiv.id = alertId;
+        form.appendChild(alertDiv);
+
         alertDiv.innerHTML = "";
 
         try {
@@ -38,7 +44,17 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             const responseBody = await response.json();
             if (responseBody.errors) {
-                showAlert({ type: "msg", icon: "danger", title: "Error", text: responseBody.errors[0].msg }, alertDiv);
+                const error = responseBody.errors[0];
+                if (error.type === "field") {
+                    const field = form.querySelector(`[name="${error.path}"]`);
+                    let fieldAlertDiv = field.nextElementSibling;
+                    fieldAlertDiv = document.createElement('div');
+                    fieldAlertDiv.classList.add('divAlert');
+                    field.insertAdjacentElement('afterend', fieldAlertDiv);
+                    showAlert({ type: "msg-field", icon: "danger", title: "Error", text: error.msg, focus: error.path }, fieldAlertDiv);
+                } else {
+                    showAlert({ type: "msg", icon: "danger", title: "Error", text: error.msg }, alertDiv);
+                }
             } else {
                 showAlert(responseBody, alertDiv);
             }
@@ -52,7 +68,11 @@ document.addEventListener("DOMContentLoaded", () => {
         event.preventDefault();
         const form = event.target;
         const alertId = form.getAttribute("data-alert-id") || "divAlert";
-        const alertDiv = document.getElementById(alertId);
+        let alertDiv = document.getElementById(alertId);
+
+        alertDiv = document.createElement('div');
+        alertDiv.id = alertId;
+        form.appendChild(alertDiv);
         alertDiv.innerHTML = "";
 
         const result = await Swal.fire({
@@ -81,7 +101,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
                 const responseBody = await response.json();
                 if (response.status >= 400) {
-                    showAlert({ type: "msg", icon: "danger", title: "Error", text: responseBody.errors.map(error => error.msg).join('\n') }, alertDiv);
+                    const error = responseBody.errors[0];
+                    if (error.type === "field") {
+                        const field = form.querySelector(`[name="${error.path}"]`);
+                        let fieldAlertDiv = field.nextElementSibling;
+                        fieldAlertDiv = document.createElement('div');
+                        fieldAlertDiv.classList.add('divAlert');
+                        field.insertAdjacentElement('afterend', fieldAlertDiv);
+                        showAlert({ type: "msg-field", icon: "danger", title: "Error", text: error.msg }, fieldAlertDiv);
+                    } else {
+                        showAlert({ type: "msg", icon: "danger", title: "Error", text: error.msg }, alertDiv);
+                    }
                 } else {
                     showAlert(responseBody, alertDiv);
                 }
@@ -109,6 +139,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (alert.focus) {
                     document.getElementById(alert.focus).focus();
                 }
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 6000);
+                break;
+            case "msg-field":
+                alertDiv.innerHTML = `<div class="alert alert-${alert.icon}" role="alert"><b>${alert.title}:</b> ${alert.text}</div>`;
+                if (alert.focus) {
+                    document.getElementById(alert.focus).focus();
+                }
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 6000);
                 break;
             case "reload":
                 Swal.fire({
