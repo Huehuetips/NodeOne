@@ -6,7 +6,7 @@ const seedDatabase = async () => {
         console.log('Tables created successfully!'); // Mensaje de éxito
 
         // Crear un usuario primero con rankId nulo temporalmente
-        const initialUser = await User.create({ nameUser: 'Sistema', userUser:'_system_', emailUser : 'system@example.com', passwordUser: 'admin123', rankId: null });
+        const initialUser = await User.create({ nameUser: 'Sistema', userUser:'_system_', emailUser : 'system@example.com', passwordUser: '$pbkdf2-sha512$2500$QGiNEQJASKl1bs15z5nzng$7gsj2EuZMHh0wYKex3LZ.vq7Y4ZIDx8h0XBVKCrRrsOWPsEk4DjM75UOhXwGU4psHbMjV0LJuOqVGN6GHhQtbg', defaultPasswordUser: false , rankId: null });
         
         // Insertar datos de prueba
         const superAdminRank = await Rank.create({ nameRank: 'Super Admin', createUserId: initialUser.id, writeUserId: initialUser.id });
@@ -26,8 +26,8 @@ const seedDatabase = async () => {
         await superAdminRank.addPermission(writePermission);
         await superAdminRank.addPermission(deletePermission);
         
-        await User.create({ nameUser: 'Administrador', userUser: 'Administrador', emailUser: 'admin@example.com', passwordUser: 'admin123', rankId: superAdminRank.id });
-        await User.create({ nameUser: 'Test', userUser: 'Test', emailUser: 'test@example.com', passwordUser: 'admin123', rankId: superAdminRank.id });
+        await User.create({ nameUser: 'Administrador', userUser: 'Administrador', emailUser: 'admin@example.com', passwordUser: '$pbkdf2-sha512$2500$QGiNEQJASKl1bs15z5nzng$7gsj2EuZMHh0wYKex3LZ.vq7Y4ZIDx8h0XBVKCrRrsOWPsEk4DjM75UOhXwGU4psHbMjV0LJuOqVGN6GHhQtbg', defaultPasswordUser: false , rankId: superAdminRank.id });
+        await User.create({ nameUser: 'Test', userUser: 'Test', emailUser: 'test@example.com', passwordUser: '$pbkdf2-sha512$2500$QGiNEQJASKl1bs15z5nzng$7gsj2EuZMHh0wYKex3LZ.vq7Y4ZIDx8h0XBVKCrRrsOWPsEk4DjM75UOhXwGU4psHbMjV0LJuOqVGN6GHhQtbg', defaultPasswordUser: false , rankId: superAdminRank.id });
         
         // Eliminar la restricción de clave foránea
         await sequelize.queryInterface.removeConstraint('users', 'users_ibfk_3');

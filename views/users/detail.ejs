@@ -1,11 +1,41 @@
-<h1>Detalles del Usuario</h1>
-<p>ID: <%= user.id %></p>
-<p>Name: <%= user.nameUser %></p>
-<p>User: <%= user.user %></p>
-<p>Email: <%= user.email %></p>
-<p>Rango: <%= user.rankId %></p>
-<p>Enable: <%= user.enable ? 'Sí' : 'No' %></p>
-<p>Fecha de Creación: <%= new Date(user.createdAtUser).toLocaleDateString('es-ES') %></p>
-<p>Fecha de Edición: <%= new Date(user.writedAtUser).toLocaleDateString('es-ES') %></p>
-<p>Creado por: <%= user.createUserId.nameUser %></p>
-<p>Editado por: <%= user.writeUserId.nameUser %></p>
+<h1 class="details-header">Detalles del Usuario</h1>
+<div class="details-item">
+    <label>ID:</label>
+    <span><%= user.id %></span>
+</div>
+<div class="details-item">
+    <label>Nombre:</label>
+    <span><%= user.nameUser %></span>
+</div>
+<div class="details-item">
+    <label>Usuario:</label>
+    <span><%= user.userUser %></span>
+</div>
+<div class="details-item">
+    <label>Email:</label>
+    <span><%= user.emailUser %></span>
+</div>
+<div class="details-item">
+    <label>Rango:</label>
+    <span><%= user.Rank.nameRank %></span>
+</div>
+<div class="details-item">
+    <label>Habilitado:</label>
+    <span><%= user.enable ? 'Sí' : 'No' %></span>
+</div>
+<div class="details-item">
+    <label>Fecha de Creación:</label>
+    <span><%= new Date(user.createdAt).toLocaleDateString('es-ES') %></span>
+</div>
+<div class="details-item">
+    <label>Fecha de Edición:</label>
+    <span><%= new Date(user.updatedAt).toLocaleDateString('es-ES') %></span>
+</div>
+<div class="details-item">
+    <label>Creado por:</label>
+    <span><%= user.createUser.nameUser %></span>
+</div>
+<div class="details-item">
+    <label>Editado por:</label>
+    <span><%= user.writeUser.nameUser %></span>
+</div>

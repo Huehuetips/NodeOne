@@ -50,11 +50,24 @@ User.init({
     },
     passwordUser: {
         type: DataTypes.STRING,
+        defaultValue: '$pbkdf2-sha512$2500$lpJSirE2JsTYew.h1Bqj9A$sUYwX7/fZ8MyypNxxYQecK4U0So5B02Bbvd9C5nIJN.bg99KOfqmX4F2aWVfDtpbAekGb/x5dzEwxEkHQyD2/g',
         allowNull: false,
     },
     enableUser: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
+        allowNull: false,
+    },
+    defaultPasswordUser: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+        allowNull: false,
+    },
+    lastPasswordChange: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        allowNull: false,
+
     },
 }, {
     sequelize,
@@ -68,6 +81,5 @@ User.hasMany(User, { foreignKey: 'createUserId', as: 'createdUsers' });
 User.hasMany(User, { foreignKey: 'writeUserId', as: 'writtenUsers' });
 User.belongsTo(User, { foreignKey: 'createUserId', as: 'createUser' });
 User.belongsTo(User, { foreignKey: 'writeUserId', as: 'writeUser' });
-
 
 module.exports = User;

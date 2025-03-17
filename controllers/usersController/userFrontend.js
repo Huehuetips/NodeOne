@@ -38,9 +38,9 @@ class userFrontend {
         try {
             const user = await User.findByPk(req.params.id, {
                 include: [
-                    { model: User, as: 'creator', attributes: ['nameUser'] },
-                    { model: User, as: 'writer', attributes: ['nameUser'] },
-                    { model: Rank, attributes: ['nameRank'] }
+                    Rank,
+                    { association: 'createUser' },
+                    { association: 'writeUser' },
                 ]
             });
             res.render('users/detail', { title: 'Detalles del Usuario', user });

@@ -5,6 +5,8 @@ const rankRoutes = require('./rankRoutes');
 const permissionRoutes = require('./permissionRoutes');
 const moduleRoutes = require('./moduleRoutes');
 
+console.log("Hola");
+
 // Administrar las rutas del frontend
 router.use('/users', userRoutes);
 router.use('/ranks', rankRoutes);

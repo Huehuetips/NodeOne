@@ -16,8 +16,8 @@
     --color-transparent-white: rgba(255, 255, 255, 0.75);
 
     /* Colores adicionales */
-    --color-yellow: #ffeb3b;
-    --color-yellow-dark: #fbc02d;
+    --color-yellow: #fcf086;
+    --color-yellow-dark: #966b00;
     --color-orange: #ff9800;
     --color-orange-dark: #f57c00;
     --color-purple: #9c27b0;
@@ -35,6 +35,7 @@
     --color-brown: #795548;
     --color-brown-dark: #5d4037;
     --color-bluegray: #607d8b;
+    --color-ligthbluegray: #b3cdda;
     --color-bluegray-dark: #455a64;
 
     /* Colores principales */
@@ -48,11 +49,14 @@
     --text-secondary-color: var(--color-gray-light);
 
     /* Colores de enlaces */
-    --link-color: var(--color-gray-medium);
+    --link-color: var(--color-ligthbluegray);
     --link-hover-color: var(--color-gray-dark);
 
     /* Colores de formularios */
     --form-background-color: var(--color-white);
+    --form-background-table-color: var(--color-gray-medium);
+    --form-background-table-midle-color: var(--color-gray-mdlight);
+    --form-background-table-hover-color: var(--color-gray-dark);
     --form-border-color: var(--color-transparent);
     --form-input-background-color: var(--color-gray-medium);
     --form-input-background-focus-color: var(--color-gray-mdlight);
@@ -62,9 +66,18 @@
     --button-primary-hover-background: var(--color-bluegray-dark);
 
     /* Colores de alertas */
-    --alert-background-color: var(--color-red);
-    --alert-border-color: var(--color-red-dark);
-    --alert-text-color: var(--color-red-dark);
+    --alert-success-background-color: var(--color-green-light);
+    --alert-success-border-color: var(--color-green-dark);
+    --alert-success-text-color: var(--color-green-dark);
+    --alert-danger-background-color: var(--color-red);
+    --alert-danger-border-color: var(--color-red-dark);
+    --alert-danger-text-color: var(--color-red-dark);
+    --alert-warning-background-color: var(--color-yellow);
+    --alert-warning-border-color: var(--color-yellow-dark);
+    --alert-warning-text-color: var(--color-yellow-dark);
+    --alert-info-background-color: var(--color-blue);
+    --alert-info-border-color: var(--color-blue-dark);
+    --alert-info-text-color: var(--color-blue-dark);
 
     /* tamaño de fuente */
     --font-size: 14px;
@@ -91,6 +104,8 @@
 
 html, body {
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Ejemplo de estilos CSS */
@@ -98,8 +113,6 @@ body {
     background: var(--background-color);
     color: var(--text-secondary-color);
     height: 100vh;
-    display: flex;
-    flex-direction: column;
 }
 
 /* Estilos generales para la navbar */
@@ -161,20 +174,9 @@ nav ul li ul li a {
     display: block;
 }
 
-form {
+form, table {
     margin: 10px auto;
     max-width: 95%;
-}
-
-
-.error {
-    padding: 10px;
-    margin-top: 10px;
-    background-color: var(--alert-background-color);
-    border: 1px solid var(--alert-border-color);
-    color: var(--alert-text-color);
-    font-size: var(--alert-size);
-    border-radius: 4px;
 }
 
 .datafilter {
@@ -247,150 +249,108 @@ footer {
 
 .divAlert {
     position: fixed;
-    top: 20px;
+    top: 85px;
     right: 20px;
     width: 300px;
     z-index: 1000;
 }
 
-.divAlert:nth-child(3) {
-    top: 20px;
-}
-
-.divAlert:nth-child(4) {
-    top: calc(20px + 1 * 60px);
-}
-
-.divAlert:nth-child(5) {
-    top: calc(20px + 2 * 60px);
-}
-
-.divAlert:nth-child(6) {
-    top: calc(20px + 3 * 60px);
-}
-
-.divAlert:nth-child(7) {
-    top: calc(20px + 4 * 60px);
-}
-
-.divAlert:nth-child(8) {
-    top: calc(20px + 5 * 60px);
-}
-
-.divAlert:nth-child(9) {
-    top: calc(20px + 6 * 60px);
-}
-
-.divAlert:nth-child(10) {
-    top: calc(20px + 7 * 60px);
-}
-
-.divAlert:nth-child(11) {
-    top: calc(20px + 8 * 60px);
-}
-
-.divAlert:nth-child(12) {
-    top: calc(20px + 9 * 60px);
-}
-
-.divAlert:nth-child(13) {
-    top: calc(20px + 9 * 60px);
-}
-
-.divAlert:nth-child(14) {
-    top: calc(20px + 10 * 60px);
-}
-
-.divAlert:nth-child(15) {
-    top: calc(20px + 11 * 60px);
-}
-
-.divAlert:nth-child(16) {
-    top: calc(20px + 12 * 60px);
-}
-
-.divAlert:nth-child(17) {
-    top: calc(20px + 13 * 60px);
-}
-
-.divAlert:nth-child(18) {
-    top: calc(20px + 14 * 60px);
-}
-
-.divAlert:nth-child(19) {
-    top: calc(20px + 15 * 60px);
-}
-
-.divAlert:nth-child(20) {
-    top: calc(20px + 16 * 60px);
-}
-
-.divAlert:nth-child(21) {
-    top: calc(20px + 17 * 60px);
-}
-
-.divAlert:nth-child(22) {
-    top: calc(20px + 18 * 60px);
-}
-
-.divAlert:nth-child(23) {
-    top: calc(20px + 19 * 60px);
-}
-
-.divAlert:nth-child(24) {
-    top: calc(20px + 20 * 60px);
-}
-
-.divAlert:nth-child(25) {
-    top: calc(20px + 21 * 60px);
-}
-
-.divAlert:nth-child(26) {
-    top: calc(20px + 22 * 60px);
-}
-
-.divAlert:nth-child(27) {
-    top: calc(20px + 23 * 60px);
-}
-
-.divAlert:nth-child(28) {
-    top: calc(20px + 24 * 60px);
-}
-
-.divAlert:nth-child(29) {
-    top: calc(20px + 25 * 60px);
-}
-
-
 .alert {
+    margin: 5px 0;
     padding: 15px;
     border-radius: 4px;
     font-size: var(--alert-size);
     width: 100%;
-    animation: fadeIn 0.5s, fadeOut 2s 4s forwards;
+    animation: fadeIn 0.5s, fadeOut 3s 4s forwards;
 }
 
 .alert-success {
-    background-color: var(--color-success);
-    border: 1px solid var(--color-success-dark);
-    color: var(--color-success-dark);
+    background-color: var(--alert-success-background-color);
+    border: 1px solid var(--alert-success-border-color);
+    color: var(--alert-success-text-color);
 }
 
 .alert-danger {
-    background-color: var(--color-red);
-    border: 1px solid var(--color-red-dark);
-    color: var(--color-red-dark);
+    background-color: var(--alert-danger-background-color);
+    border: 1px solid var(--alert-danger-border-color);
+    color: var(--alert-danger-text-color);
 }
 
 .alert-warning {
-    background-color: var(--color-warning);
-    border: 1px solid var(--color-warning-dark);
-    color: var(--color-warning-dark);
+    background-color: var(--alert-warning-background-color);
+    border: 1px solid var(--alert-warning-border-color);
+    color: var (--alert-warning-text-color);
 }
 
 .alert-info {
-    background-color: var(--color-info);
-    border: 1px solid var(--color-info-dark);
-    color: var(--color-info-dark);
+    background-color: var(--alert-info-background-color);
+    border: 1px solid var(--alert-info-border-color);
+    color: var(--alert-info-text-color);
 }
 
+/* Estilos generales para todas las tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-size);
+    text-align: left;
+    background-color: var(--form-background-table-color);
+}
+
+table th, table td {
+    padding: 8px 10px;
+    border: 1px solid var(--form-border-color);
+}
+
+table th {
+    background-color: var(--primary-color);
+    color: var(--text-primary-color);
+    resize: horizontal;
+    overflow: auto;
+    cursor: pointer;
+}
+
+table tr:nth-child(even) {
+    background-color: var(--form-background-table-midle-color);
+}
+
+table tr:hover {
+    background-color: var(--form-background-table-hover-color);
+}
+
+a{
+    color: var(--link-color);
+    text-decoration: underline;
+}
+
+/* Estilos para la vista de detalles */
+.details-header {
+    font-size: var(--title-size);
+    margin-bottom: 20px;
+    color: var(--text-primary-color);
+    text-align: center;
+    padding: 10px;
+    border-bottom: 2px solid var(--color-gray-medium);
+}
+
+.details-item {
+    margin-bottom: 10px;
+    font-size: var(--text-size);
+    color: var(--text-secondary-color);
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid var(--color-gray-medium);
+}
+
+.details-item label {
+    font-weight: bold;
+    color: var(--text-primary-color);
+    flex: 1;
+}
+
+.details-item span {
+    margin-left: 10px;
+    flex: 2;
+    text-align: right;
+}

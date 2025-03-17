@@ -1,33 +1,32 @@
-
 <div>
     <table>
         <thead>
             <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>User</th>
-                <th>Email</th>
-                <th>Rango</th>
-                <th>Enable</th>
-                <th>Fecha de Creación</th>
-                <th>Fecha de Edición</th>
-                <th>Creado por</th>
-                <th>Editado por</th>
+                <th data-column="index" data-order="desc">#</th>
+                <th data-column="nameUser" data-order="desc">Name</th>
+                <th data-column="userUser" data-order="desc">User</th>
+                <th data-column="emailUser" data-order="desc">Email</th>
+                <th data-column="Rank.nameRank" data-order="desc">Rango</th>
+                <th data-column="enable" data-order="desc">Enable</th>
+                <th data-column="createdAt" data-order="desc">Fecha de Creación</th>
+                <th data-column="updatedAt" data-order="desc">Fecha de Edición</th>
+                <th data-column="createUser.nameUser" data-order="desc">Creado por</th>
+                <th data-column="writeUser.nameUser" data-order="desc">Editado por</th>
             </tr>
         </thead>
         <tbody>
             <% users.forEach((user, index) => { %>
-            <tr>
+            <tr onclick="window.location.href='/users/detail/<%= user.id %>'">
                 <td><%= index + 1 %></td>
                 <td><%= user.nameUser %></td>
                 <td><%= user.userUser %></td>
                 <td><%= user.emailUser %></td>
-                <td><%= user.Rank.nameRank %></td>
+                <td><a href="/ranks/detail/<%= user.rankId %>" onclick="event.stopPropagation();"><%= user.Rank.nameRank %></a></td>
                 <td><%= user.enable ? 'Sí' : 'No' %></td>
                 <td><%= new Date(user.createdAt).toLocaleDateString('es-ES') %></td>
                 <td><%= new Date(user.updatedAt).toLocaleDateString('es-ES') %></td>
-                <td><%= user.createUser.nameUser %></td>
-                <td><%= user.writeUser.nameUser %></td>
+                <td><a href="/users/detail/<%= user.createUserId %>" onclick="event.stopPropagation();"><%= user.createUser.nameUser %></a></td>
+                <td><a href="/users/detail/<%= user.writeUserId %>" onclick="event.stopPropagation();"><%= user.writeUser.nameUser %></a></td>
             </tr>
             <% }) %>
         </tbody>

@@ -5,15 +5,12 @@
   "scripts": {
     "production": "NODE_ENV=production node app.js",
     "dev": "nodemon app.js",
-
     "db:clean": "node scripts/clean.js",
     "db:clean_": "",
     "db:initData": "node scripts/initial.js",
     "db:seedData": "node scripts/seed.js",
-
     "db:start": "npm run db:clean && npm run db:initData",
     "db:startSeed": "npm run db:start && npm run db:seedData",
-    
     "start": "npm run db:start && npm run dev",
     "startSeed": "npm run db:startSeed && npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,6 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "autoprefixer": "^10.4.20",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "express": "^4.21.2",

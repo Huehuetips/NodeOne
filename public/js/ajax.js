@@ -22,15 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = new URLSearchParams(new FormData(form));
         const method = form.getAttribute("method");
         const action = form.getAttribute("action");
-        const alertId = form.getAttribute("data-alert-id") || "divAlert";
-        let alertDiv = document.getElementById(alertId);
-
-        alertDiv = document.createElement('div');
-        alertDiv.classList.add('divAlert');
-        alertDiv.id = alertId;
-        form.appendChild(alertDiv);
-
-        alertDiv.innerHTML = "";
 
         try {
             const response = await fetch(action, {
@@ -45,22 +36,20 @@ document.addEventListener("DOMContentLoaded", () => {
             const responseBody = await response.json();
             if (responseBody.errors) {
                 const error = responseBody.errors[0];
+                // responseBody.errors.forEach(error => {
+                    
                 if (error.type === "field") {
-                    const field = form.querySelector(`[name="${error.path}"]`);
-                    let fieldAlertDiv = field.nextElementSibling;
-                    fieldAlertDiv = document.createElement('div');
-                    fieldAlertDiv.classList.add('divAlert');
-                    field.insertAdjacentElement('afterend', fieldAlertDiv);
-                    showAlert({ type: "msg-field", icon: "danger", title: "Error", text: error.msg, focus: error.path }, fieldAlertDiv);
+                    showAlert({ type: "msg", icon: "warning", title: "Advertencia", text: error.msg, focus: error.path });
                 } else {
-                    showAlert({ type: "msg", icon: "danger", title: "Error", text: error.msg }, alertDiv);
+                    showAlert({ type: "msg", icon: "warning", title: "Error", text: error.msg });
                 }
+                // })
             } else {
-                showAlert(responseBody, alertDiv);
+                showAlert(responseBody);
             }
         } catch (error) {
             console.error('Error:', error);
-            showAlert({ type: "msg", icon: "danger", title: "Error", text: error }, alertDiv);
+            showAlert({ type: "msg", icon: "danger", title: "Error", text: error });
         }
     }
 
@@ -121,7 +110,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function showAlert(alert, alertDiv) {
+    function showAlert(alert) {
+        const divAlert = document.getElementById("divAlert");
         switch (alert.type) {
             case "pop-up":
                 Swal.fire({
@@ -135,21 +125,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
                 break;
             case "msg":
-                alertDiv.innerHTML = `<div class="alert alert-${alert.icon}" role="alert"><b>${alert.title}:</b> ${alert.text}</div>`;
+                const alertDiv = document.createElement('div');
+                alertDiv.classList.add('alert', `alert-${alert.icon}`);
+                divAlert.insertBefore(alertDiv, divAlert.firstChild);
+                alertDiv.innerHTML = `<b>${alert.title}:</b> ${alert.text}`;
                 if (alert.focus) {
                     document.getElementById(alert.focus).focus();
                 }
                 setTimeout(() => {
-                    alertDiv.remove();
-                }, 6000);
-                break;
-            case "msg-field":
-                alertDiv.innerHTML = `<div class="alert alert-${alert.icon}" role="alert"><b>${alert.title}:</b> ${alert.text}</div>`;
-                if (alert.focus) {
-                    document.getElementById(alert.focus).focus();
-                }
-                setTimeout(() => {
-                    alertDiv.remove();
+                    if (alertDiv.parentNode) {
+                        alertDiv.parentNode.removeChild(alertDiv);
+                    }
                 }, 6000);
                 break;
             case "reload":
@@ -298,5 +284,34 @@ document.addEventListener("DOMContentLoaded", () => {
                 suggestions.remove();
             }
         });
+    });
+});
+
+
+document.querySelectorAll('th').forEach(header => {
+    header.addEventListener('click', () => {
+        const table = header.closest('table');
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        const column = header.getAttribute('data-column');
+        const order = header.getAttribute('data-order');
+        const newOrder = order === 'desc' ? 'asc' : 'desc';
+
+        rows.sort((a, b) => {
+            const aText = a.querySelector(`td:nth-child(${header.cellIndex + 1})`).textContent.trim();
+            const bText = b.querySelector(`td:nth-child(${header.cellIndex + 1})`).textContent.trim();
+
+            if (column === 'index' || column === 'enable') {
+                return (order === 'desc' ? 1 : -1) * (aText.localeCompare(bText, 'es', { numeric: true }));
+            } else if (column.includes('Date')) {
+                return (order === 'desc' ? 1 : -1) * (new Date(aText) - new Date(bText));
+            } else {
+                return (order === 'desc' ? 1 : -1) * aText.localeCompare(bText, 'es');
+            }
+        });
+
+        header.setAttribute('data-order', newOrder);
+        tbody.innerHTML = '';
+        rows.forEach(row => tbody.appendChild(row));
     });
 });
